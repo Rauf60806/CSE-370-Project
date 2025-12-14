@@ -1,0 +1,71 @@
+body {
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(#c7e8ca,#f0fff4);
+}
+
+.farm-bg {
+    background-image: url('https://i.imgur.com/3uY6YFQ.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.box, .panel {
+    width: 380px;
+    margin: 60px auto;
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 15px 30px rgba(0,0,0,.2);
+}
+
+h2 {
+    text-align: center;
+    color: #2f6f3e;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #b7d3b7;
+}
+
+button {
+    background: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #388e3c;
+}
+
+.tabs button {
+    width: 50%;
+    background: #a5d6a7;
+}
+
+.error {
+    color: #b71c1c;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+.dashboard {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: #ffffffcc;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+}

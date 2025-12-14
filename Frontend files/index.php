@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-/* If already logged in, redirect to dashboard */
+/* If user already logged in, redirect to dashboard */
 if (isset($_SESSION['role'])) {
     header("Location: dashboard/" . $_SESSION['role'] . ".php");
     exit;
@@ -17,74 +17,79 @@ if (isset($_SESSION['role'])) {
 </head>
 <body>
 
-<section class="login-page">
-    <div class="login-container">
+<div class="login-container">
 
-        <h1>Cattle Management</h1>
+    <h1>Cattle Management System</h1>
 
-        <div class="tabs">
-            <button class="tab active" onclick="showTab('login')">Login</button>
-            <button class="tab" onclick="showTab('register')">Register</button>
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('login')">Login</button>
+        <button class="tab" onclick="showTab('register')">Register</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <form id="loginForm" class="tab-content active">
+        <div id="loginError" class="error hidden"></div>
+
+        <label>Username</label>
+        <input type="text" id="loginUsername" required>
+
+        <label>Password</label>
+        <input type="password" id="loginPassword" required>
+
+        <label>Access Key</label>
+        <input type="number" id="loginAccessKey" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <!-- REGISTRATION FORM -->
+    <form id="registerForm" class="tab-content">
+
+        <label>Register As</label>
+        <select id="registerRole" required>
+            <option value="">Select role</option>
+            <option value="farmer">Farmer</option>
+            <option value="worker">Worker</option>
+        </select>
+
+        <label>Username</label>
+        <input type="text" id="regUsername" required>
+
+        <label>Password</label>
+        <input type="password" id="regPassword" required>
+
+        <label>Access Key</label>
+        <input type="number" id="regAccessKey" required>
+
+        <!-- Farmer Fields -->
+        <div id="farmerFields" class="hidden">
+            <label>Farm Name</label>
+            <input type="text" id="farmName">
+
+            <label>Farm Location</label>
+            <input type="text" id="farmLocation">
         </div>
 
-        <!-- LOGIN -->
-        <form id="loginForm" class="tab-content active">
-            <div id="loginError" class="error hidden"></div>
+        <!-- Worker Fields -->
+        <div id="workerFields" class="hidden">
+            <label>Full Name</label>
+            <input type="text" id="workerName">
 
-            <label>Username</label>
-            <input type="text" id="loginUsername" required>
+            <label>Age</label>
+            <input type="number" id="workerAge">
 
-            <label>Password</label>
-            <input type="password" id="loginPassword" required>
+            <label>Salary</label>
+            <input type="number" id="workerSalary">
 
-            <label>Access Key</label>
-            <input type="text" id="loginAccessKey" required>
+            <label>Work Hours</label>
+            <input type="number" id="workerHours">
+        </div>
 
-            <button type="submit">Login</button>
-        </form>
+        <button type="submit">Register</button>
+    </form>
 
-        <!-- REGISTER -->
-        <form id="registerForm" class="tab-content">
-
-            <label>Role</label>
-            <select id="registerRole" required>
-                <option value="">Select role</option>
-                <option value="farmer">Farmer</option>
-                <option value="worker">Worker</option>
-            </select>
-
-            <label>Username</label>
-            <input type="text" id="regUsername" required>
-
-            <label>Password</label>
-            <input type="password" id="regPassword" required>
-
-            <label>Access Key</label>
-            <input type="text" id="regAccessKey" required>
-
-            <div id="farmerFields" class="hidden">
-                <label>Farm Name</label>
-                <input type="text" id="farmName">
-                <label>Farm Location</label>
-                <input type="text" id="farmLocation">
-            </div>
-
-            <div id="workerFields" class="hidden">
-                <label>Full Name</label>
-                <input type="text" id="workerName">
-                <label>Age</label>
-                <input type="number" id="workerAge">
-                <label>Salary</label>
-                <input type="number" id="workerSalary">
-                <label>Work Hours</label>
-                <input type="number" id="workerHours">
-            </div>
-
-            <button type="submit">Register</button>
-        </form>
-
-    </div>
-</section>
+</div>
 
 <script src="script.js"></script>
 </body>
