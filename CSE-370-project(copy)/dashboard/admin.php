@@ -14,32 +14,20 @@ if ($_SESSION['role'] !== 'admin') die("Unauthorized");
 
 <div class="panel">
 <h2>Admin Dashboard</h2>
-
-<form method="post">
-    <input name="duration" placeholder="Contract duration (months)" required>
-    <button name="create">Generate Access Key</button>
-</form>
+    <input id="access_key" placeholder="Add Key">
+    <input id="registration_id" placeholder="Registration id">
+    <button>submit</button>
 
 <?php
 if (isset($_POST['create'])) {
     $stmt = $conn->prepare(
-        "INSERT INTO admin_panel (registration_id,contract_duration)
+        "INSERT INTO admin_panel (access_key,registration_id)
          VALUES (0,?)"
     );
-    $stmt->bind_param("i",$_POST['duration']);
-    $stmt->execute();
-    echo "<p>New Access Key Created</p>";
 }
 ?>
-
 <h3>Existing Keys</h3>
 <ul>
-<?php
-$r=$conn->query("SELECT access_key,contract_duration FROM admin_panel");
-while($row=$r->fetch_assoc()){
-    echo "<li>Key: {$row['access_key']} | {$row['contract_duration']} months</li>";
-}
-?>
 </ul>
 </div>
 </body>

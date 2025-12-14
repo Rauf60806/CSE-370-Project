@@ -9,7 +9,7 @@ if (isset($_SESSION['role'])) {
 <html>
 <head>
     <title>Cattle Management</title>
-    <link rel="stylesheet" href="..assets/style.css">
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 

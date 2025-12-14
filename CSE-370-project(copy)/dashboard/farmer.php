@@ -10,17 +10,19 @@
 <div class="dashboard">
 <h2>🌾 Farmer Dashboard</h2>
 
-<div class="card">
-<h3>Add Category</h3>
-<input id="cat">
-<button onclick="addCategory()">Add</button>
-</div>
 
 <div class="card">
 <h3>Add Cattle</h3>
 <input id="cid" placeholder="Cattle ID">
 <input id="age" placeholder="Age">
-<input id="health" placeholder="Health Status">
+<input id="gender" placeholder="gender">
+<input id="weight" placeholder="weight">
+<select id="Cattle_type">
+            <option value="">Select Type</option>
+            <option value="Cow">Cow</option>
+            <option value="Goat">Goat</option>
+            <option value="Sheep">Sheep</option>
+        </select>
 <button onclick="addCattle()">Add Cattle</button>
 </div>
 </div>
