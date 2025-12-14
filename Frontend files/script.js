@@ -1,3 +1,18 @@
+const farmerFields = document.getElementById('farmerFields');
+const workerFields = document.getElementById('workerFields');
+const loginUsername = document.getElementById('loginUsername');
+const loginPassword = document.getElementById('loginPassword');
+const loginAccessKey = document.getElementById('loginAccessKey');
+const loginError = document.getElementById('loginError');
+const regUsername = document.getElementById('regUsername');
+const regPassword = document.getElementById('regPassword');
+const regAccessKey = document.getElementById('regAccessKey');
+const registerRole = document.getElementById('registerRole');
+const farmName = document.getElementById('farmName');
+const farmLocation = document.getElementById('farmLocation');
+
+
+
 function showTab(tab) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
