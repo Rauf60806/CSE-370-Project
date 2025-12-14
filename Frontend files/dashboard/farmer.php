@@ -3,4 +3,4 @@
 <p>Total Cattle: <?= $conn->query("SELECT COUNT(*) c FROM cattle")->fetch_assoc()['c'] ?></p>
 <a href="logout.php">Logout</a>
 
-
+<h2>"pushing"</h2>
