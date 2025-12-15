@@ -4,15 +4,16 @@ $d = json_decode(file_get_contents("php://input"), true);
 
 $conn->begin_transaction();
 
-$conn->query(
- "INSERT INTO dashboard_panel (user_name,password,farm_name,Farm_location)
-  VALUES ('{$d['username']}','{$d['password']}','{$d['farm_name']}','{$d['farm_location']}')"
-);
 $id = $conn->insert_id;
 
 $conn->query(
- "INSERT INTO registers (registration_id,access_key,date)
-  VALUES ($id,{$d['access_key']},CURDATE())"
+ "INSERT INTO dashboard_panel (registration_id,user_name,farm_name,Farm_location,password)
+  VALUES ($id,'{$d['ruser']}','{$d['farmName']}','{$d['farmLoc']}','{$d['rpass']}')"
+);
+
+$conn->query(
+ "INSERT INTO admin_panel (access_key,registration_id,date)
+  VALUES ({$d['access_key']},$id,CURDATE())"
 );
 
 $conn->commit();

@@ -25,9 +25,9 @@ if ($user === "admin") {
 
 /* User */
 $s = $conn->prepare(
-    "SELECT registration_id,password FROM dashboard_panel WHERE user_name=?"
+    "SELECT registration_id,username,pass FROM dashboard_panel d join admin_panel a on d.registration_id=a.registration_id WHERE access_key=?"
 );
-$s->bind_param("s",$user);
+$s->bind_param("iss", $id, $user , $pass);
 $s->execute();
 $r = $s->get_result();
 

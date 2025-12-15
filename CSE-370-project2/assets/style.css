@@ -1,0 +1,106 @@
+body {
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(#c7e8ca,#f0fff4);
+}
+
+.farm-bg {
+    background-image: url('img/farmBG.png');
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.box, .panel, .row{
+    width: 380px;
+    margin: 60px auto;
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 15px 30px rgba(0,0,0,.2);
+}
+h2 {
+    text-align: center;
+    color: #2f6f3e;
+}
+
+input, select, button {
+    width: 95%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #b7d3b7;
+}
+
+button {
+    background: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #388e3c;
+}
+
+.tabs button {
+    width: 49%;
+    background: #a5d6a7;
+}
+
+.error {
+    color: #b71c1c;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none;
+}
+
+.dashboard {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: #ffffffcc;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+.table {
+    border-collapse: collapse;
+    margin: 25px auto;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+
+
+.table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+.table th,
+.table td {
+    padding: 12px 15px;
+}
+.table tbody tr {
+    background-color: white;
+    border-bottom: 1px solid #dddddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+.table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+    
