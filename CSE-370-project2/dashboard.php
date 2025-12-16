@@ -26,7 +26,7 @@ if (isset($_SESSION['role'])) {
 
 <script>
     function addCattle() {
-        window.location.href="addcattle.php"
+        window.location.href="add_cattle.php"
     }
 
     function showCattle() {
