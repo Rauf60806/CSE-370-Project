@@ -15,11 +15,18 @@ if (isset($_SESSION['role'])) {
 
 <div class="box">
     <h2>Cattle Management System</h2>
+<br>
 
-    <div class="tabs">
-        <button onclick="showTab('login')">Login</button>
-        <button onclick="showTab('register')">Register</button>
-    </div>
+        <a href="register.php">
+            <button type="button">Register</button>
+        </a>
+<br>
+<br>
+<br>
+<br>
+<br>
+    <h3>Already Registered? Sign in now!</h3>
+<br>
 
     <!-- LOGIN -->
     <form id="loginForm" action="login.php" method="post">
