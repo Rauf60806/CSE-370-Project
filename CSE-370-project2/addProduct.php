@@ -27,19 +27,19 @@ require_once "db.php";
 |--------------------------------------------------------------------------
 | This block runs ONLY when the form is submitted using POST
 */
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
     $category = $_POST["Category"];
-    $production_date       = date("Y-M-D");
-    $cattle_id    = $_POST["Cattle_id"];
+    $production_date = $_POST["production_date"];
     $price     = $_POST["price"];
     $quantity     = $_POST["quantity"];
 
     // SQL query to insert cattle data
     // NOTE: cattle_id is now auto-increment, so we don't include it
-    $sql = "INSERT INTO  product (category,production_date,cattle_id,price,quantity)
-            VALUES ('$category', '$production_date', '$cattle_id', '$price','$quantity')";
+    $sql = "INSERT INTO  product (category,production_date,price,quantity)
+            VALUES ('$category', '$production_date', '$price','$quantity')";
 
     // Execute query
     if (mysqli_query($conn, $sql)) {
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Show success message if redirected after insert
 if (isset($_GET['success'])) {
-    echo "<h2 style='color:white;'>Cattle added successfully</h2>";
+    echo "<h2 style='color:white;'>Product added successfully</h2>";
 }
 ?>
 <div class = "panel">
@@ -70,8 +70,8 @@ if (isset($_GET['success'])) {
     </div>
 
     <div style="margin-bottom: 15px;">
-        <label style="font-weight: bold;">Cattle Id</label><br>
-        <input type="number" name="Cattle_id" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <label style="font-weight: bold;">Date</label><br>
+        <input type="date" name="production_date" required style="width: 100%; padding: 8px; border-radius: 5px;">
     </div>
 
     <div style="margin-bottom: 15px;">

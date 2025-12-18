@@ -21,6 +21,7 @@ if (isset($_SESSION['role'])) {
             <button onclick="showCattle()">Show Catttle</button>
             <button onclick="addWorker()">Add Worker</button>
             <button onclick="showWorker()">Show Worker</button>
+            <button onclick="showProduct()">Show Products</button>
 
         </div>
     </section>
@@ -39,6 +40,9 @@ if (isset($_SESSION['role'])) {
     }
     function showWorker() {
         window.location.href="showWorker.php"
+    }
+    function showProduct() {
+        window.location.href="showProduct.php"
     }
 </script>
 </html>
