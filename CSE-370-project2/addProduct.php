@@ -32,14 +32,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Read form values safely
     $category = $_POST["Category"];
     $production_date       = date("Y-M-D");
-    $cattle_id    = $_POST["Cattle_id"];
     $price     = $_POST["price"];
     $quantity     = $_POST["quantity"];
 
     // SQL query to insert cattle data
     // NOTE: cattle_id is now auto-increment, so we don't include it
-    $sql = "INSERT INTO  product (category,production_date,cattle_id,price,quantity)
-            VALUES ('$category', '$production_date', '$cattle_id', '$price','$quantity')";
+    $sql = "INSERT INTO  product (category,production_date,price,quantity)
+            VALUES ('$category', '$production_date', '$price','$quantity')";
 
     // Execute query
     if (mysqli_query($conn, $sql)) {
@@ -67,11 +66,6 @@ if (isset($_GET['success'])) {
             <option value="Meat">Meat</option>
             <option value="Wool">Wool</option>
         </select>
-    </div>
-
-    <div style="margin-bottom: 15px;">
-        <label style="font-weight: bold;">Cattle Id</label><br>
-        <input type="number" name="Cattle_id" required style="width: 100%; padding: 8px; border-radius: 5px;">
     </div>
 
     <div style="margin-bottom: 15px;">
