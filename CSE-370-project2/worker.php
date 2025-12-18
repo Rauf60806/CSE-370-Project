@@ -14,13 +14,12 @@ if (isset($_SESSION['role'])) {
 <body class="farm-bg">
     <section id="header">
         <div class="panel">
-            <h2>🌾 Farmer Dashboard</h2>
+            <h2>🌾 Worker Dashboard</h2>
         </div>
         <div class="panel">
-            <button onclick="addCattle()">Add Catttle</button>
+            <button onclick="addProduct()">Add Product</button>
             <button onclick="showCattle()">Show Catttle</button>
-            <button onclick="addWorker()">Add Worker</button>
-            <button onclick="showWorker()">Show Worker</button>
+            <button onclick="logCattle()">Add Log</button>
 
         </div>
     </section>
@@ -28,17 +27,15 @@ if (isset($_SESSION['role'])) {
 </body>
 
 <script>
-    function addCattle() {
-        window.location.href="add_cattle.php"
+    function addProduct() {
+        window.location.href="addProduct.php"
     }
+
     function showCattle() {
         window.location.href="showcattle.php"
     }
-    function addWorker() {
+    function logCattle() {
         window.location.href="addWorker.php"
-    }
-    function showWorker() {
-        window.location.href="showWorker.php"
     }
 </script>
 </html>

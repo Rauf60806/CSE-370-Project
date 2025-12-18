@@ -20,12 +20,6 @@ if (isset($_SESSION['role'])) {
 <?php
 require_once "db.php";
 
-/*
-|--------------------------------------------------------------------------
-| HANDLE FORM SUBMISSION
-|--------------------------------------------------------------------------
-| This block runs ONLY when the form is submitted using POST
-*/
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
@@ -51,34 +45,34 @@ if (isset($_GET['success'])) {
 }
 ?>
 
-
+<div class = "panel">
 <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">
 
     <!-- User name -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">User Name</label><br>
-        <input type="text" name="user_name" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="text" name="user_name" required >
     </div>
 
     <!-- Farm Name input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Farm Name</label><br>
-        <input type="text" name="farm_name" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="text" name="farm_name" required >
     </div>
 
     <!-- Farm Location input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Farm Location</label><br>
-        <input type="text" name="Farm_location" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="text" name="Farm_location" required >
     </div>
 
     <!-- Password input -->
     <div style="margin-bottom: 20px;">
         <label style="font-weight: bold;">Password</label><br>
-        <input type="password" name="pass" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="password" name="pass" >
     </div>
     <!-- Submit button -->
-    <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+    <button type="submit" >
         Register
     </button>
     <a href="index.php">
@@ -86,6 +80,6 @@ if (isset($_GET['success'])) {
     </a>
 
 </form>
-
+</div>
 </body>
 </html>
