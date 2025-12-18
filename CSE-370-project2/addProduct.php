@@ -27,11 +27,13 @@ require_once "db.php";
 |--------------------------------------------------------------------------
 | This block runs ONLY when the form is submitted using POST
 */
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
     $category = $_POST["Category"];
     $production_date       = date("Y-M-D");
+    $cattle_id    = $_POST["Cattle_id"];
     $price     = $_POST["price"];
     $quantity     = $_POST["quantity"];
 
@@ -52,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Show success message if redirected after insert
 if (isset($_GET['success'])) {
-    echo "<h2 style='color:white;'>Cattle added successfully</h2>";
+    echo "<h2 style='color:white;'>Product added successfully</h2>";
 }
 ?>
 <div class = "panel">
@@ -66,6 +68,11 @@ if (isset($_GET['success'])) {
             <option value="Meat">Meat</option>
             <option value="Wool">Wool</option>
         </select>
+    </div>
+
+    <div style="margin-bottom: 15px;">
+        <label style="font-weight: bold;">Cattle Id</label><br>
+        <input type="number" name="Cattle_id" required style="width: 100%; padding: 8px; border-radius: 5px;">
     </div>
 
     <div style="margin-bottom: 15px;">
