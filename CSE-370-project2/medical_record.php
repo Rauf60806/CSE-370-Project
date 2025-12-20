@@ -1,10 +1,4 @@
 <?php
-session_start();
-if (isset($_SESSION['role'])) {
-    header("Location: dashboard/" . $_SESSION['role'] . ".php");
-    exit;
-}
-
 require_once "db.php";
 
 //function to analyze cattle data and find outliers

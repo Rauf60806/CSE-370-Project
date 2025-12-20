@@ -1,9 +1,5 @@
 <?php
 session_start();
-if (isset($_SESSION['role'])) {
-    header("Location: dashboard/" . $_SESSION['role'] . ".php");
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html>
@@ -15,6 +11,7 @@ if (isset($_SESSION['role'])) {
     <section id="header">
         <div class="panel">
             <h2>🌾 Farmer Dashboard</h2>
+            <h2>User:<?php echo $_SESSION["user"]; ?></h2>
         </div>
         <div class="panel">
             <button onclick="addCattle()">Add Catttle</button>

@@ -1,11 +1,4 @@
-<?php
-session_start();
-if (isset($_SESSION['role'])) {
-    header("Location: dashboard/" . $_SESSION['role'] . ".php");
-    exit;
-}
-?>
-<!DOCTYPE html>
+<DOCTYPE html>
 <html>
 <head>
     <title>Registration</title>
@@ -75,9 +68,7 @@ if (isset($_GET['success'])) {
     <button type="submit" >
         Register
     </button>
-    <a href="index.php">
-            <button type="button">Login Now</button>
-    </a>
+    <h3>Already Registered?<a href="index.php"> Sign in</a> now!</h3>
 
 </form>
 </div>

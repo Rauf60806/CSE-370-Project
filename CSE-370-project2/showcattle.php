@@ -1,11 +1,4 @@
-<?php
-session_start();
-if (isset($_SESSION['role'])) {
-    header("Location: dashboard/" . $_SESSION['role'] . ".php");
-    exit;
-}
-?>
-<!DOCTYPE html>
+<!DOCTYPE html>+
 <html>
 <head>
     <title>Cattle Management</title>

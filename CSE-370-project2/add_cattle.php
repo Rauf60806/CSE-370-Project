@@ -1,10 +1,3 @@
-<?php
-session_start();
-if (isset($_SESSION['role'])) {
-    header("Location: dashboard/" . $_SESSION['role'] . ".php");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,13 +13,7 @@ if (isset($_SESSION['role'])) {
 <?php
 // Include database connection
 require_once "db.php";
-
-/*
-|--------------------------------------------------------------------------
-| HANDLE FORM SUBMISSION
-|--------------------------------------------------------------------------
-| This block runs ONLY when the form is submitted using POST
-*/
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
@@ -37,12 +24,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // SQL query to insert cattle data
     // NOTE: cattle_id is now auto-increment, so we don't include it
-    $sql = "INSERT INTO cattle (cattle_type, age, gender, weight)
+    $sql_cattle = "INSERT INTO cattle (cattle_type, age, gender, weight)
             VALUES ('$cattle_type', '$age', '$gender', '$weight')";
-
+    $sql_owncattle = "INSERT INTO owns_cattle (registration_id,cattle_id)
+            VALUES ('$farmar_id','$cattle__id')";
+    $sql_getId = "";
     // Execute query
-    if (mysqli_query($conn, $sql)) {
-        // Redirect after successful insert to avoid duplicate on reload (PRG pattern)
+    if (mysqli_query($conn, $sql_cattle)) {
+        $cattle_id = $conn->insert_id;
+    }
+    if (mysqli_query($conn, $sql_owncattle)) {
         header("Location: add_cattle.php?success=1");
         exit;
     } else {

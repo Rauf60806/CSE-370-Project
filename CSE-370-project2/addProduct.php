@@ -1,10 +1,4 @@
-<?php
-session_start();
-if (isset($_SESSION['role'])) {
-    header("Location: dashboard/" . $_SESSION['role'] . ".php");
-    exit;
-}
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,19 +15,12 @@ if (isset($_SESSION['role'])) {
 // Include database connection
 require_once "db.php";
 
-/*
-|--------------------------------------------------------------------------
-| HANDLE FORM SUBMISSION
-|--------------------------------------------------------------------------
-| This block runs ONLY when the form is submitted using POST
-*/
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
+    $farmer_id = $_SESSION["registration_id"];
     $category = $_POST["Category"];
-    $production_date       = date("Y-M-D");
-    $cattle_id    = $_POST["Cattle_id"];
+    $production_date = $_POST["production_date"];
     $price     = $_POST["price"];
     $quantity     = $_POST["quantity"];
 
@@ -71,8 +58,8 @@ if (isset($_GET['success'])) {
     </div>
 
     <div style="margin-bottom: 15px;">
-        <label style="font-weight: bold;">Cattle Id</label><br>
-        <input type="number" name="Cattle_id" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <label style="font-weight: bold;">Date</label><br>
+        <input type="date" name="production_date" required style="width: 100%; padding: 8px; border-radius: 5px;">
     </div>
 
     <div style="margin-bottom: 15px;">
