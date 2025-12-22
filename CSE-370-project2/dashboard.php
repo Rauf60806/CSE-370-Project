@@ -42,5 +42,8 @@ session_start();
     function showProduct() {
         window.location.href="showProduct.php"
     }
+    function medical_record() {
+        window.location.href="medical_record.php"
+    }
 </script>
 </html>
