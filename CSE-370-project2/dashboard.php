@@ -23,11 +23,8 @@ session_start();
             <button onclick="showCattle()">Show Catttle</button>
             <button onclick="addWorker()">Add Worker</button>
             <button onclick="showWorker()">Show Worker</button>
-<<<<<<< HEAD
             <button onclick="addProduct()">Add Products</button>
-=======
             <button onclick="addProduct()">Add Product</button>
->>>>>>> 13072cbc6316edef9acf005e80c3773384b81d96
             <button onclick="showProduct()">Show Products</button>
             <button onclick="medical_record()">Show Medical Records</button>
 
