@@ -9,7 +9,7 @@ session_start();
 </head>
 <body class="farm-bg">
     <div class="topbar">
-        <button title="Home">
+        <button type="button" onclick="location.href='dashboard.php'" title="Home">
             <img src="assets/img/barn.png">
         </button>
         <button onclick="location.href='logout.php'">Logout</button>
@@ -26,7 +26,6 @@ session_start();
             <button onclick="addWorker()">Add Worker</button>
             <button onclick="showWorker()">Show Worker</button>
             <button onclick="addProduct()">Add Products</button>
-            <button onclick="addProduct()">Add Product</button>
             <button onclick="showProduct()">Show Products</button>
             <button onclick="medical_record()">Show Medical Records</button>
 

@@ -59,7 +59,12 @@ list($sheepSlope, $sheepOutliers)= analyzeCattle($sheep);
 </head>
 
 <body class="farm-bg">
-
+<div class="topbar">
+    <button type="button" onclick="location.href='dashboard.php'" title="Home">
+        <img src="assets/img/barn.png">
+    </button>
+    <button onclick="location.href='logout.php'">Logout</button>
+</div>
 <div class="panel">
     <h2>Medical Record</h2>
 </div>

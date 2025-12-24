@@ -5,7 +5,12 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="farm-bg" margin="50px">
-
+<div class="topbar">
+    <button type="button" onclick="location.href='dashboard.php'" title="Home">
+        <img src="assets/img/barn.png">
+    </button>
+    <button onclick="location.href='logout.php'">Logout</button>
+</div>
 <div class="panel">
     <h2>Add New Product</h2><br>
 </div>
