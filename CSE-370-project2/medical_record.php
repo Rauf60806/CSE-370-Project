@@ -1,6 +1,6 @@
 <?php
 require_once "db.php";
-
+session_start();
 //function to analyze cattle data and find outliers
 function analyzeCattle($data) {
     $sumXY = 0;
@@ -34,7 +34,9 @@ function analyzeCattle($data) {
 | FETCH DATA
 |--------------------------------------------------------------------------
 */
-$sql = "SELECT cattle_id, age, weight, cattle_type FROM cattle";
+$sql = "SELECT c.cattle_id, c.age, c.weight, c.cattle_type FROM cattle c
+JOIN owns_cattle o ON c.cattle_id = o.cattle_id WHERE o.user_name = '"
+. mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
 $result = mysqli_query($conn, $sql);
 
 $cow = $goat = $sheep = [];

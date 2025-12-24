@@ -20,7 +20,7 @@ if (isset($_SESSION['role'])) {
 <?php
 // Include database connection
 require_once "db.php";
-
+session_start();
 /*
 |--------------------------------------------------------------------------
 | HANDLE FORM SUBMISSION
@@ -41,8 +41,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO worker (name, age, salary, work_hour, access_key)
             VALUES ('$name', '$age', '$salary', '$work_hour', '$access_key')";
 
-    // Execute query
     if (mysqli_query($conn, $sql)) {
+        $worker_id = $conn->insert_id;
+        $sql_ownworker = "INSERT INTO owns_worker (user_name, worker_id) VALUES ('"
+    . mysqli_real_escape_string($conn, $_SESSION['user']) . "', "
+    . (int)$worker_id . ")";
+    }
+    // Execute query
+    if (mysqli_query($conn, $sql_ownworker)) {
         // Redirect after successful insert to avoid duplicate on reload (PRG pattern)
         header("Location: addWorker.php?success=1");
         exit;
