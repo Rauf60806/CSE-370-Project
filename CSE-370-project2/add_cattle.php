@@ -22,13 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender      = $_POST["gender"];
     $weight      = $_POST["weight"];
 
-    // SQL query to insert cattle data
-    // NOTE: cattle_id is now auto-increment, so we don't include it
     $sql_cattle = "INSERT INTO cattle (cattle_type, age, gender, weight)
             VALUES ('$cattle_type', '$age', '$gender', '$weight')";
-    // $sql_owncattle = "INSERT INTO owns_cattle (user_name, cattle_id) VALUES ('" . $_SESSION['username'] . "', '" . $cattle_id . "')";
-
-    // Execute query
     if (mysqli_query($conn, $sql_cattle)) {
         $cattle_id = $conn->insert_id;
         $sql_owncattle = "INSERT INTO owns_cattle (user_name, cattle_id) VALUES ('"
