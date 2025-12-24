@@ -18,17 +18,14 @@
                     <th>Type</th>
                     <th>Age</th>
                     <th>Gender</th>
-                    <th>Height</th>
+                    <th>Weight</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-<<<<<<< HEAD
-=======
             
->>>>>>> 13072cbc6316edef9acf005e80c3773384b81d96
                 require_once "db.php";
-                $sql="select * from cattle";
+                $sql="select * from cattle c";
                 $result=mysqli_query($conn,$sql);
                 if (mysqli_num_rows($result)> 0) {
                 while ($row=mysqli_fetch_assoc($result)) {
