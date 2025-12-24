@@ -27,8 +27,6 @@
                 session_start();
                 $sql="SELECT * from cattle c join owns_cattle o on c.cattle_id = o.cattle_id group by user_name having user_name = '"
     .               mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
-                require_once "db.php";
-                $sql="select * from cattle c";
                 $result=mysqli_query($conn,$sql);
                 if (mysqli_num_rows($result)> 0) {
                 while ($row=mysqli_fetch_assoc($result)) {
