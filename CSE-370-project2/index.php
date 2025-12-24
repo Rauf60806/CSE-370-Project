@@ -14,8 +14,10 @@ session_start();
 <br>
     <!-- LOGIN -->
     <form id="loginForm" action="login.php" method="post">
-        Username:<input type="text" name="uname"><br/>
-        password:<input type="password" name="pass"><br/><br/>
+        <label style="font-weight: bold;">Username</label><br>
+        <input type="text" name="uname" width="100%"><br/>
+        <label style="font-weight: bold;">Password</label><br>
+        <input type="password" name="pass" width="99%"><br/><br/>
         <button>Login</button>
         <div id="loginError"></div>
     </form>
