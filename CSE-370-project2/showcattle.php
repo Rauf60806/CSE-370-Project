@@ -23,6 +23,10 @@
             </thead>
             <tbody>
                 <?php
+<<<<<<< HEAD
+=======
+            
+>>>>>>> 13072cbc6316edef9acf005e80c3773384b81d96
                 require_once "db.php";
                 $sql="select * from cattle";
                 $result=mysqli_query($conn,$sql);
