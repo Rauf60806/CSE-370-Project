@@ -19,6 +19,7 @@ session_start();
             <button onclick="addWorker()">Add Worker</button>
             <button onclick="showWorker()">Show Worker</button>
             <button onclick="showProduct()">Show Products</button>
+            <button onclick="medical_record()">Show Medical Records</button>
 
         </div>
     </section>
@@ -40,6 +41,9 @@ session_start();
     }
     function showProduct() {
         window.location.href="showProduct.php"
+    }
+    function medical_record() {
+        window.location.href="medical_record.php"
     }
 </script>
 </html>

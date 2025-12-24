@@ -26,17 +26,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // NOTE: cattle_id is now auto-increment, so we don't include it
     $sql_cattle = "INSERT INTO cattle (cattle_type, age, gender, weight)
             VALUES ('$cattle_type', '$age', '$gender', '$weight')";
-    $sql_owncattle = "INSERT INTO owns_cattle (registration_id,cattle_id)
-            VALUES ('$farmar_id','$cattle__id')";
-    $sql_getId = "";
+    // $sql_owncattle = "INSERT INTO owns_cattle (user_name, cattle_id) VALUES ('" . $_SESSION['username'] . "', '" . $cattle_id . "')";
+
     // Execute query
     if (mysqli_query($conn, $sql_cattle)) {
         $cattle_id = $conn->insert_id;
-    }
+        $sql_owncattle = "INSERT INTO owns_cattle (user_name, cattle_id) VALUES ('"
+    . mysqli_real_escape_string($conn, $_SESSION['user']) . "', "
+    . (int)$cattle_id . ")";
+
+    } 
     if (mysqli_query($conn, $sql_owncattle)) {
-        header("Location: add_cattle.php?success=1");
+       header("Location: add_cattle.php?success=1");
         exit;
-    } else {
+    } 
+     else {
         echo "<p style='color:red;'>Error adding cattle: " . mysqli_error($conn) . "</p>";
     }
 }
@@ -93,8 +97,12 @@ if (isset($_GET['success'])) {
     <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
         Add Cattle
     </button>
-
 </form>
+</div>
+<div class="panel" style="margin-top: 20px;">
+    <button onclick="window.location.href='showcattle.php'">
+        Show Cattle
+    </button>
 </div>
 </body>
 </html>
