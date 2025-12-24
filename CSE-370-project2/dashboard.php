@@ -9,7 +9,7 @@ session_start();
 </head>
 <body class="farm-bg">
     <div class="topbar">
-        <button onclick="location.href='dashboard.php'">Home</button>
+        <button onclick="location.href='dashboard.php'"></button>
         <button onclick="location.href='logout.php'">Logout</button>
     </div>
 

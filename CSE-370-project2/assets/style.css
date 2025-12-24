@@ -108,9 +108,9 @@ button:hover {
     top: 0;
     left: 0;
     width: 50px;
-    height: 100%;
-    background: rgba(96, 156, 109, 0.95);
-    margin: 10px;
+    height: auto;
+    background: rgba(255,255,255,0.95);
+    margin: 15px;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -119,29 +119,33 @@ button:hover {
     padding: 15px 8px;             
     gap: 10px;                     
 
-    box-shadow: 0 4px 10px rgba(0,0,0,10);
+    box-shadow: 0 4px 10px rgba(0,0,0,.60);
     z-index: 1000;
-    border-radius: 6px;
+    border-radius: 50px;
 }
 
 
 /* Buttons inside topbar */
 .topbar button {
-    width: 100%;                   /* fit inside sidebar */
+    width: 50px;                  /* fit inside sidebar */
+    height: 50px;
     padding: 10px 6px;
     margin: 0;
-    background: #ffffff;
+    background: #4caf50;
     color: #2f6f3e;
     font-weight: bold;
-    border-radius: 6px;
+    border-radius: 50%;
 }
-
+.topbar button_home{
+    width: 50px;                  /* fit inside sidebar */
+    height: 50px;
+    padding: 10px 6px;
+    margin: 0;
+    background: url('img/barn.png');
+    font-weight: bold;
+    border-radius: 50%;
+    
+}
 .topbar button:hover {
-    background: #cb250b;
-}
-
-/* Push page content below the fixed bar */
-body {
-    padding-top: 0px;
-    padding-left: 7%;
+    background: #306b32;
 }
