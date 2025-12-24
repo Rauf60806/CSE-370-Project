@@ -103,3 +103,46 @@ button:hover {
     font-weight: bold;
     color: #009879;
 }
+
+.topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 7%;
+    height: 100%;
+    background: rgba(96, 156, 109, 0.95);
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+
+    padding: 15px 8px;             
+    gap: 10px;                     
+
+    box-shadow: 0 4px 10px rgba(0,0,0,10);
+    z-index: 1000;
+    border-radius: 6px;
+}
+
+
+/* Buttons inside topbar */
+.topbar button {
+    width: 100%;                   /* fit inside sidebar */
+    padding: 10px 6px;
+    margin: 0;
+    background: #ffffff;
+    color: #2f6f3e;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+.topbar button:hover {
+    background: #cb250b;
+}
+
+/* Push page content below the fixed bar */
+body {
+    padding-top: 0px;
+    padding-left: 7%;
+}

@@ -5,7 +5,10 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="farm-bg" margin="50px">
-
+<div class="topbar">
+        <button onclick="location.href='dashboard.php'">Home</button>
+        <button onclick="location.href='logout.php'">Logout</button>
+</div>
 <div class="panel">
     <h2>Add New Cattle</h2><br>
 </div>

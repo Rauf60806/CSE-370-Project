@@ -23,9 +23,9 @@
             </thead>
             <tbody>
                 <?php
-                start_session();
+            
                 require_once "db.php";
-                $sql="select * from cattle c join owns_cattle o on c.cattle_id=o.cattle_id where o.user_name='".$_SESSION['user']."'";
+                $sql="select * from cattle";
                 $result=mysqli_query($conn,$sql);
                 if (mysqli_num_rows($result)> 0) {
                 while ($row=mysqli_fetch_assoc($result)) {
