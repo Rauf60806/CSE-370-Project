@@ -11,13 +11,14 @@ session_start();
     <section id="header">
         <div class="panel">
             <h2>🌾 Farmer Dashboard</h2>
-            <h2>User:<?php echo $_SESSION["user"]; ?></h2>
+            <h2>User: <?php echo $_SESSION["user"]; ?></h2>
         </div>
         <div class="panel">
             <button onclick="addCattle()">Add Catttle</button>
             <button onclick="showCattle()">Show Catttle</button>
             <button onclick="addWorker()">Add Worker</button>
             <button onclick="showWorker()">Show Worker</button>
+            <button onclick="addProduct()">Add Products</button>
             <button onclick="showProduct()">Show Products</button>
             <button onclick="medical_record()">Show Medical Records</button>
 
@@ -44,6 +45,9 @@ session_start();
     }
     function medical_record() {
         window.location.href="medical_record.php"
+    }
+    function addProduct() {
+        window.location.href="addProduct.php"
     }
 </script>
 </html>

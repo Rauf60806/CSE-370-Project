@@ -8,9 +8,12 @@ body {
     background-size: cover;
     background-attachment: fixed;
 }
+.nav{
+    width: auto;
 
+}
 .box, .panel, .row{
-    width: 380px;
+    width: 500px;
     margin: 60px auto;
     background: rgba(255,255,255,0.95);
     padding: 25px;
@@ -23,7 +26,7 @@ h2 {
 }
 
 input, select, button {
-    width: 95%;
+    width: auto;
     padding: 10px;
     margin: 8px 0;
     border-radius: 6px;
