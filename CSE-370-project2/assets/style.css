@@ -8,10 +8,6 @@ body {
     background-size: cover;
     background-attachment: fixed;
 }
-.nav{
-    width: auto;
-
-}
 .box, .panel, .row{
     width: 500px;
     margin: 60px auto;
