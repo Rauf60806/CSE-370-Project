@@ -127,24 +127,22 @@ button:hover {
 
 /* Buttons inside topbar */
 .topbar button {
-    width: 50px;                  /* fit inside sidebar */
-    height: 50px;
-    padding: 10px 6px;
-    margin: 0;
-    background: #4caf50;
-    color: #2f6f3e;
-    font-weight: bold;
+    width: 50px;
+    height: 50px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 50%;
+    overflow: hidden; /* Keeps the image inside the circle */
+    padding: 0;       /* Reset padding to let the image control size */
 }
-.topbar button_home{
-    width: 50px;                  /* fit inside sidebar */
-    height: 50px;
-    padding: 10px 6px;
-    margin: 0;
-    background: url('img/barn.png');
-    font-weight: bold;
-    border-radius: 50%;
-    
+
+/* Control the icon size */
+.topbar button img {
+    width: 30px;      /* Adjust this to make icon bigger/smaller */
+    height: 30px;     /* Match the width */
+    object-fit: contain; /* Ensures icon doesn't stretch */
+    filter: brightness(0) invert(1); /* OPTIONAL: Turns black icons white */
 }
 .topbar button:hover {
     background: #306b32;
