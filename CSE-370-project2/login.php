@@ -11,7 +11,7 @@ if (isset($_POST["uname"]) && isset($_POST["pass"])) {
         header("Location: dashboard.php");
     }
     else {
-        //header("Location: index.php");
-        die("Username Or Password is incorrect");
+        header("Location: index.php?success=1");
     }
 }
+?>

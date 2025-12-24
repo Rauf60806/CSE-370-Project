@@ -1,8 +1,9 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
+--
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2025 at 02:33 PM
+-- Generation Time: Dec 24, 2025 at 04:52 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -19,18 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `cattle_managment`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin_panel`
---
-
-CREATE TABLE `admin_panel` (
-  `access_key` int(11) NOT NULL,
-  `registration_id` int(11) DEFAULT NULL,
-  `contract_duration` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -58,6 +47,36 @@ CREATE TABLE `cattle` (
   `weight` decimal(6,2) DEFAULT NULL,
   `cattle_type` enum('Cow','Goat','Sheep') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cattle`
+--
+
+INSERT INTO `cattle` (`cattle_id`, `age`, `gender`, `weight`, `cattle_type`) VALUES
+(25, 10, 'Male', 100.00, 'Cow'),
+(26, 12, 'Male', 100.00, 'Cow'),
+(27, 14, 'Male', 100.00, 'Cow'),
+(28, 10, 'Male', 200.00, 'Cow'),
+(29, 10, 'Male', 150.00, 'Cow'),
+(30, 8, 'Male', 175.00, 'Cow'),
+(31, 10, 'Male', 50.00, 'Cow'),
+(32, 10, 'Male', 50.00, 'Cow'),
+(33, 10, 'Male', 50.00, 'Goat'),
+(34, 45, 'Male', 40.00, 'Goat'),
+(35, 5, 'Male', 20.00, 'Sheep'),
+(36, 6, 'Male', 25.00, 'Sheep'),
+(37, 7, 'Male', 30.00, 'Sheep'),
+(38, 8, 'Female', 40.00, 'Sheep'),
+(39, 6, 'Male', 10.00, 'Sheep'),
+(40, 10, 'Female', 40.00, 'Goat'),
+(41, 10, 'Female', 40.00, 'Goat'),
+(42, 500, 'Female', 1.00, 'Goat'),
+(43, 500, 'Female', 1.00, 'Goat'),
+(44, 500, 'Female', 1.00, 'Goat'),
+(45, 500, 'Female', 1.00, 'Goat'),
+(46, 500, 'Female', 1.00, 'Goat'),
+(47, 500, 'Female', 1.00, 'Goat'),
+(48, 5, 'Male', 8.00, 'Cow');
 
 -- --------------------------------------------------------
 
@@ -89,11 +108,25 @@ CREATE TABLE `customer` (
 --
 
 CREATE TABLE `dashboard_panel` (
-  `login_id` int(11) NOT NULL,
   `user_name` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `duration` int(11) DEFAULT NULL
+  `farm_name` varchar(50) NOT NULL,
+  `Farm_location` varchar(50) NOT NULL,
+  `pass` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `dashboard_panel`
+--
+
+INSERT INTO `dashboard_panel` (`user_name`, `farm_name`, `Farm_location`, `pass`) VALUES
+('Ahnaf Hossain Rauf', 'Gazipur Wool Factory', 'Gazipur', 'Rauf123'),
+('Antara', 'dhaka', 'bangladesh', 'antara'),
+('Fuad', 'farmville', 'mirpur', 'fuad'),
+('hasan', 'mirpur', 'dhaka', 'hasan'),
+('kafe', 'dhaka', 'bangladesh', 'kafe'),
+('kafeee', 'dhaka', 'bangladesh', 'kafeee'),
+('kulfi', 'dhaka', 'bangladesh', 'kulfi'),
+('test', 'farmville', 'mirpur', 'test');
 
 -- --------------------------------------------------------
 
@@ -104,18 +137,6 @@ CREATE TABLE `dashboard_panel` (
 CREATE TABLE `experience` (
   `worker_id` int(11) NOT NULL,
   `experience` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `farm_owner`
---
-
-CREATE TABLE `farm_owner` (
-  `registration_id` int(11) NOT NULL,
-  `Farm_name` varchar(100) DEFAULT NULL,
-  `farm_location` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -157,17 +178,6 @@ CREATE TABLE `logs` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `meat`
---
-
-CREATE TABLE `meat` (
-  `product_id` int(11) NOT NULL,
-  `meat_area` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `medical_record`
 --
 
@@ -185,23 +195,41 @@ CREATE TABLE `medical_record` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `milk`
+-- Table structure for table `owns_cattle`
 --
 
-CREATE TABLE `milk` (
-  `product_id` int(11) NOT NULL,
-  `fat_per` decimal(5,2) DEFAULT NULL
+CREATE TABLE `owns_cattle` (
+  `user_name` varchar(255) NOT NULL,
+  `cattle_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `owns_cattle`
+--
+
+INSERT INTO `owns_cattle` (`user_name`, `cattle_id`) VALUES
+('Ahnaf Hossain Rauf', 48);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `owns_product`
+--
+
+CREATE TABLE `owns_product` (
+  `user_name` varchar(255) NOT NULL,
+  `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produces`
+-- Table structure for table `owns_worker`
 --
 
-CREATE TABLE `produces` (
-  `cattle_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL
+CREATE TABLE `owns_worker` (
+  `user_name` varchar(255) NOT NULL,
+  `worker_id` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -214,10 +242,16 @@ CREATE TABLE `product` (
   `product_id` int(11) NOT NULL,
   `category` varchar(50) DEFAULT NULL,
   `production_date` date DEFAULT NULL,
-  `cattle_id` int(11) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`product_id`, `category`, `production_date`, `price`, `quantity`) VALUES
+(1, 'Milk', '0000-00-00', 100.00, 5);
 
 -- --------------------------------------------------------
 
@@ -227,19 +261,7 @@ CREATE TABLE `product` (
 
 CREATE TABLE `purchases` (
   `purchase_id` int(11) NOT NULL,
-  `login_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `registers`
---
-
-CREATE TABLE `registers` (
-  `registration_id` int(11) NOT NULL,
-  `access_key` int(11) NOT NULL,
-  `date` date DEFAULT NULL
+  `user_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -332,18 +354,6 @@ CREATE TABLE `takes_care` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wool`
---
-
-CREATE TABLE `wool` (
-  `product_id` int(11) NOT NULL,
-  `fiber_type` varchar(50) DEFAULT NULL,
-  `wool_color` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `worker`
 --
 
@@ -357,14 +367,17 @@ CREATE TABLE `worker` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Indexes for dumped tables
+-- Dumping data for table `worker`
 --
 
+INSERT INTO `worker` (`worker_id`, `name`, `age`, `salary`, `work_hour`, `access_key`) VALUES
+(1, 'Admiral kalapahar', 30, 20000.00, 50, 123),
+(2, 'General Rambo', 60, 44000.00, 40, 333),
+(3, 'Rukaiya muntaha', 10, 1000.00, 24, 123);
+
 --
--- Indexes for table `admin_panel`
+-- Indexes for dumped tables
 --
-ALTER TABLE `admin_panel`
-  ADD PRIMARY KEY (`access_key`);
 
 --
 -- Indexes for table `buys`
@@ -396,19 +409,14 @@ ALTER TABLE `customer`
 -- Indexes for table `dashboard_panel`
 --
 ALTER TABLE `dashboard_panel`
-  ADD PRIMARY KEY (`login_id`);
+  ADD PRIMARY KEY (`user_name`),
+  ADD UNIQUE KEY `user_name` (`user_name`);
 
 --
 -- Indexes for table `experience`
 --
 ALTER TABLE `experience`
   ADD PRIMARY KEY (`worker_id`);
-
---
--- Indexes for table `farm_owner`
---
-ALTER TABLE `farm_owner`
-  ADD PRIMARY KEY (`registration_id`);
 
 --
 -- Indexes for table `goat`
@@ -430,12 +438,6 @@ ALTER TABLE `logs`
   ADD KEY `login_id` (`login_id`);
 
 --
--- Indexes for table `meat`
---
-ALTER TABLE `meat`
-  ADD PRIMARY KEY (`product_id`);
-
---
 -- Indexes for table `medical_record`
 --
 ALTER TABLE `medical_record`
@@ -443,38 +445,36 @@ ALTER TABLE `medical_record`
   ADD KEY `cattle_id` (`cattle_id`);
 
 --
--- Indexes for table `milk`
+-- Indexes for table `owns_cattle`
 --
-ALTER TABLE `milk`
-  ADD PRIMARY KEY (`product_id`);
+ALTER TABLE `owns_cattle`
+  ADD KEY `cattle_id` (`cattle_id`);
 
 --
--- Indexes for table `produces`
+-- Indexes for table `owns_product`
 --
-ALTER TABLE `produces`
-  ADD PRIMARY KEY (`cattle_id`,`product_id`),
-  ADD KEY `product_id` (`product_id`);
+ALTER TABLE `owns_product`
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_name` (`user_name`);
+
+--
+-- Indexes for table `owns_worker`
+--
+ALTER TABLE `owns_worker`
+  ADD KEY `user_name` (`user_name`);
 
 --
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`product_id`),
-  ADD KEY `cattle_id` (`cattle_id`);
+  ADD PRIMARY KEY (`product_id`);
 
 --
 -- Indexes for table `purchases`
 --
 ALTER TABLE `purchases`
   ADD PRIMARY KEY (`purchase_id`),
-  ADD KEY `login_id` (`login_id`);
-
---
--- Indexes for table `registers`
---
-ALTER TABLE `registers`
-  ADD PRIMARY KEY (`registration_id`,`access_key`),
-  ADD KEY `access_key` (`access_key`);
+  ADD KEY `login_id` (`user_name`);
 
 --
 -- Indexes for table `report`
@@ -524,12 +524,6 @@ ALTER TABLE `takes_care`
   ADD KEY `worker_id` (`worker_id`);
 
 --
--- Indexes for table `wool`
---
-ALTER TABLE `wool`
-  ADD PRIMARY KEY (`product_id`);
-
---
 -- Indexes for table `worker`
 --
 ALTER TABLE `worker`
@@ -541,34 +535,16 @@ ALTER TABLE `worker`
 --
 
 --
--- AUTO_INCREMENT for table `admin_panel`
---
-ALTER TABLE `admin_panel`
-  MODIFY `access_key` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `cattle`
 --
 ALTER TABLE `cattle`
-  MODIFY `cattle_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cattle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
   MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `dashboard_panel`
---
-ALTER TABLE `dashboard_panel`
-  MODIFY `login_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `farm_owner`
---
-ALTER TABLE `farm_owner`
-  MODIFY `registration_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `medical_record`
@@ -580,7 +556,7 @@ ALTER TABLE `medical_record`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `purchases`
@@ -604,7 +580,7 @@ ALTER TABLE `surveillance`
 -- AUTO_INCREMENT for table `worker`
 --
 ALTER TABLE `worker`
-  MODIFY `worker_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `worker_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -643,112 +619,42 @@ ALTER TABLE `inventory`
   ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`purchase_id`) REFERENCES `purchases` (`purchase_id`);
 
 --
--- Constraints for table `logs`
---
-ALTER TABLE `logs`
-  ADD CONSTRAINT `logs_ibfk_1` FOREIGN KEY (`report_id`) REFERENCES `report` (`report_id`),
-  ADD CONSTRAINT `logs_ibfk_2` FOREIGN KEY (`login_id`) REFERENCES `dashboard_panel` (`login_id`);
-
---
--- Constraints for table `meat`
---
-ALTER TABLE `meat`
-  ADD CONSTRAINT `meat_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
-
---
 -- Constraints for table `medical_record`
 --
 ALTER TABLE `medical_record`
   ADD CONSTRAINT `medical_record_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`);
 
 --
--- Constraints for table `milk`
+-- Constraints for table `owns_cattle`
 --
-ALTER TABLE `milk`
-  ADD CONSTRAINT `milk_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
+ALTER TABLE `owns_cattle`
+  ADD CONSTRAINT `owns_cattle_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `produces`
+-- Constraints for table `owns_product`
 --
-ALTER TABLE `produces`
-  ADD CONSTRAINT `produces_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`),
-  ADD CONSTRAINT `produces_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
+ALTER TABLE `owns_product`
+  ADD CONSTRAINT `owns_product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `owns_product_ibfk_2` FOREIGN KEY (`user_name`) REFERENCES `dashboard_panel` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `product`
+-- Constraints for table `owns_worker`
 --
-ALTER TABLE `product`
-  ADD CONSTRAINT `product_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`);
+ALTER TABLE `owns_worker`
+  ADD CONSTRAINT `owns_worker_ibfk_1` FOREIGN KEY (`user_name`) REFERENCES `dashboard_panel` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `purchases`
 --
 ALTER TABLE `purchases`
-  ADD CONSTRAINT `purchases_ibfk_1` FOREIGN KEY (`login_id`) REFERENCES `dashboard_panel` (`login_id`);
-
---
--- Constraints for table `registers`
---
-ALTER TABLE `registers`
-  ADD CONSTRAINT `registers_ibfk_1` FOREIGN KEY (`registration_id`) REFERENCES `farm_owner` (`registration_id`),
-  ADD CONSTRAINT `registers_ibfk_2` FOREIGN KEY (`access_key`) REFERENCES `admin_panel` (`access_key`);
+  ADD CONSTRAINT `purchases_ibfk_1` FOREIGN KEY (`purchase_id`) REFERENCES `inventory` (`purchase_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `purchases_ibfk_2` FOREIGN KEY (`user_name`) REFERENCES `dashboard_panel` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `report`
 --
 ALTER TABLE `report`
   ADD CONSTRAINT `report_ibfk_1` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`worker_id`);
-
---
--- Constraints for table `sheep`
---
-ALTER TABLE `sheep`
-  ADD CONSTRAINT `sheep_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`);
-
---
--- Constraints for table `supervises`
---
-ALTER TABLE `supervises`
-  ADD CONSTRAINT `supervises_ibfk_1` FOREIGN KEY (`registration_id`) REFERENCES `farm_owner` (`registration_id`),
-  ADD CONSTRAINT `supervises_ibfk_2` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`worker_id`);
-
---
--- Constraints for table `supplies`
---
-ALTER TABLE `supplies`
-  ADD CONSTRAINT `supplies_ibfk_1` FOREIGN KEY (`purchase_id`) REFERENCES `purchases` (`purchase_id`);
-
---
--- Constraints for table `surveillance`
---
-ALTER TABLE `surveillance`
-  ADD CONSTRAINT `surveillance_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`);
-
---
--- Constraints for table `surveillance_access`
---
-ALTER TABLE `surveillance_access`
-  ADD CONSTRAINT `surveillance_access_ibfk_1` FOREIGN KEY (`surveillance_id`) REFERENCES `surveillance` (`surveillance_id`),
-  ADD CONSTRAINT `surveillance_access_ibfk_2` FOREIGN KEY (`login_id`) REFERENCES `dashboard_panel` (`login_id`);
-
---
--- Constraints for table `takes_care`
---
-ALTER TABLE `takes_care`
-  ADD CONSTRAINT `takes_care_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`),
-  ADD CONSTRAINT `takes_care_ibfk_2` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`worker_id`);
-
---
--- Constraints for table `wool`
---
-ALTER TABLE `wool`
-  ADD CONSTRAINT `wool_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
-
---
--- Constraints for table `worker`
---
-ALTER TABLE `worker`
-  ADD CONSTRAINT `worker_ibfk_1` FOREIGN KEY (`access_key`) REFERENCES `admin_panel` (`access_key`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
