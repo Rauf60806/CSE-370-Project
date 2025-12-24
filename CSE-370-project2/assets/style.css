@@ -3,7 +3,6 @@ body {
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(#c7e8ca,#f0fff4);
 }
-
 .farm-bg {
     background-image: url('img/farmBG.png');
     background-size: cover;
