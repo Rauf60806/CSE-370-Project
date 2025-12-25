@@ -29,7 +29,7 @@
                 <?php
                 require_once "db.php";
                 session_start();
-                $sql="SELECT * from product c join owns_product p on c.product_id = p.product_id group by user_name having user_name = '"
+                $sql="SELECT * from product c join owns_product p on c.product_id = p.product_id WHERE p.user_name = '"
     .               mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
                 $result=mysqli_query($conn,$sql);
                 if (mysqli_num_rows($result)> 0) {

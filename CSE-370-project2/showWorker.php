@@ -30,7 +30,7 @@
                 <?php
                 require_once "db.php";
                 session_start();
-                $sql="SELECT * from worker c join owns_worker w on c.worker_id = w.worker_id group by user_name having user_name = '"
+                $sql="SELECT * from worker c join owns_worker w on c.worker_id = w.worker_id WHERE w.user_name = '"
     .               mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
                 $result=mysqli_query($conn,$sql);
                 if (mysqli_num_rows($result)> 0) {

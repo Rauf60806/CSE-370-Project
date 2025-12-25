@@ -31,7 +31,7 @@
                 <?php
                 require_once "db.php";
                 session_start();
-                $sql="SELECT * from cattle c join owns_cattle o on c.cattle_id = o.cattle_id group by user_name having user_name = '"
+                $sql="SELECT * from cattle c join owns_cattle o on c.cattle_id = o.cattle_id WHERE o.user_name = '"
     .               mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
                 $result=mysqli_query($conn,$sql);
                 if (mysqli_num_rows($result)> 0) {
