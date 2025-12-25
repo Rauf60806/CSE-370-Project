@@ -11,7 +11,7 @@
 </div>
 <div class="panel">
     <h2>Add New Cattle</h2><br>
-</div>
+
 
 <?php
 // Include database connection
@@ -25,8 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gender      = $_POST["gender"];
     $weight      = $_POST["weight"];
 
-    $sql_cattle = "INSERT INTO cattle (cattle_type, age, gender, weight)
-            VALUES ('$cattle_type', '$age', '$gender', '$weight')";
+    $sql_cattle = "INSERT INTO cattle ( age, gender, weight,cattle_type)
+            VALUES ( '$age', '$gender', '$weight','$cattle_type')";
     if (mysqli_query($conn, $sql_cattle)) {
         $cattle_id = $conn->insert_id;
         $sql_owncattle = "INSERT INTO owns_cattle (user_name, cattle_id) VALUES ('"
@@ -45,10 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Show success message if redirected after insert
 if (isset($_GET['success'])) {
-    echo "<h2 style='color:white;'>Cattle added successfully</h2>";
+    echo "<h2 style='color:#4CAF50;'>Cattle added successfully</h2>";
 }
 ?>
-
+</div>
 <!--
 |--------------------------------------------------------------------------
 | ADD CATTLE FORM

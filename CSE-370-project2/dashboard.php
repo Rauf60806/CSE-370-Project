@@ -9,10 +9,27 @@ session_start();
 </head>
 <body class="farm-bg">
     <div class="topbar">
-        <button title="Home">
+        <button onclick="Dashboard()">
             <img src="assets/img/barn.png">
         </button>
-        <button onclick="location.href='logout.php'">Logout</button>
+        <button onclick="showCattle()">
+            <img src="assets/img/cattle.png">
+        </button>
+        <button onclick="showWorker()">
+            <img src="assets/img/worker.png">
+        </button>
+        <button onclick="showProduct()">
+            <img src="assets/img/product.png">
+        </button>
+        <button onclick="medical_record()">
+            <img src="assets/img/medical.png">
+        </button>
+        <button onclick="medical_record()">
+            <img src="assets/img/wood.png">
+        </button>
+        <button style='background:red;' onclick="location.href='logout.php'">
+            <img src="assets/img/logout.png">
+        </button>
     </div>
 
     <section id="header">
@@ -26,7 +43,6 @@ session_start();
             <button onclick="addWorker()">Add Worker</button>
             <button onclick="showWorker()">Show Worker</button>
             <button onclick="addProduct()">Add Products</button>
-            <button onclick="addProduct()">Add Product</button>
             <button onclick="showProduct()">Show Products</button>
             <button onclick="medical_record()">Show Medical Records</button>
 
@@ -36,6 +52,9 @@ session_start();
 </body>
 
 <script>
+    function Dashboard() {
+        window.location.href="dashboard.php"
+    }
     function addCattle() {
         window.location.href="add_cattle.php"
     }

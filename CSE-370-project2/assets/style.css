@@ -66,72 +66,92 @@ button:hover {
     border-radius: 10px;
     margin: 15px 0;
 }
+/*Table------------------------------------------------*/
 .table {
-    border-collapse: collapse;
-    margin: 25px auto;
+    /* 1. Necessary for rounded corners */
+    border-collapse: separate; 
+    border-spacing: 0;
+    border-radius: 15px; /* Adjust this for more or less roundness */
+    overflow: hidden;    /* Clips the inner rows to the rounded border */
+
+    margin: 20px auto;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    width: 500px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #dddddd; /* Adds a border around the whole table */
 }
-
-
 
 .table thead tr {
     background-color: #009879;
     color: #ffffff;
     text-align: left;
 }
+
 .table th,
 .table td {
     padding: 12px 15px;
 }
+
 .table tbody tr {
     background-color: white;
-    border-bottom: 1px solid #dddddd;
 }
 
+/* Zebra striping */
 .table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #f8f8f8;
 }
 
-.table tbody tr:last-of-type {
-    border-bottom: 2px solid #009879;
+/* Subtle line between rows */
+.table tbody tr td {
+    border-bottom: 1px solid #eeeeee;
 }
+
+/* Remove the line from the very last row so it doesn't overlap the rounded corner */
+.table tbody tr:last-of-type td {
+    border-bottom: none;
+}
+
 .table tbody tr.active-row {
     font-weight: bold;
     color: #009879;
 }
-
+/*Table------------------------------------------------*/
 .topbar {
     position: fixed;
-    top: 0;
+    top: 50%;
     left: 0;
-    width: 50px;
+
+    transform: translateY(-50%);
+
+    width: 70px;
     height: auto;
-    background: rgba(255,255,255,0.95);
-    margin: 15px;
+    background: rgba(255,255,255,0.75);
+    margin-left: 15px;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     justify-content: flex-start;
+    
 
-    padding: 15px 8px;             
-    gap: 10px;                     
+    padding: 0px 8px;             
+    gap: 0px;                     
 
     box-shadow: 0 4px 10px rgba(0,0,0,.60);
     z-index: 1000;
-    border-radius: 50px;
+    border-radius: 70px;
 }
 
 
 /* Buttons inside topbar */
 .topbar button {
-    width: 50px;
-    height: 50px; 
+    width: 70px;
+    height: 70px; 
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,.25);
+    background:#368d33;
     border-radius: 50%;
     overflow: hidden; /* Keeps the image inside the circle */
     padding: 0;       /* Reset padding to let the image control size */
@@ -139,11 +159,11 @@ button:hover {
 
 /* Control the icon size */
 .topbar button img {
-    width: 30px;      /* Adjust this to make icon bigger/smaller */
-    height: 30px;     /* Match the width */
+    width: 45px;      /* Adjust this to make icon bigger/smaller */
+    height: 45px;     /* Match the width */
     object-fit: contain; /* Ensures icon doesn't stretch */
     filter: brightness(0) invert(1); /* OPTIONAL: Turns black icons white */
 }
 .topbar button:hover {
-    background: #306b32;
+    background: #22421a;
 }
