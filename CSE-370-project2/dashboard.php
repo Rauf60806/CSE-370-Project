@@ -9,7 +9,11 @@ session_start();
 </head>
 <body class="farm-bg">
     <div class="topbar">
+<<<<<<< HEAD
         <button onclick="Dashboard()">
+=======
+        <button type="button" onclick="location.href='dashboard.php'" title="Home">
+>>>>>>> 78d0684b75f93db02fbd7dba8a9e8ce8dcd2a021
             <img src="assets/img/barn.png">
         </button>
         <button onclick="showCattle()">

@@ -1,10 +1,3 @@
-<?php
-session_start();
-if (isset($_SESSION['role'])) {
-    header("Location: dashboard/" . $_SESSION['role'] . ".php");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +5,12 @@ if (isset($_SESSION['role'])) {
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="farm-bg" margin="50px">
-
+<div class="topbar">
+    <button type="button" onclick="location.href='dashboard.php'" title="Home">
+        <img src="assets/img/barn.png">
+    </button>
+    <button onclick="location.href='logout.php'">Logout</button>
+</div>
 <div class="panel">
     <h2>Add New Worker</h2><br>
 </div>
@@ -20,7 +18,7 @@ if (isset($_SESSION['role'])) {
 <?php
 // Include database connection
 require_once "db.php";
-
+session_start();
 /*
 |--------------------------------------------------------------------------
 | HANDLE FORM SUBMISSION
@@ -41,8 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO worker (name, age, salary, work_hour, access_key)
             VALUES ('$name', '$age', '$salary', '$work_hour', '$access_key')";
 
-    // Execute query
     if (mysqli_query($conn, $sql)) {
+        $worker_id = $conn->insert_id;
+        $sql_ownworker = "INSERT INTO owns_worker (user_name, worker_id) VALUES ('"
+    . mysqli_real_escape_string($conn, $_SESSION['user']) . "', "
+    . (int)$worker_id . ")";
+    }
+    // Execute query
+    if (mysqli_query($conn, $sql_ownworker)) {
         // Redirect after successful insert to avoid duplicate on reload (PRG pattern)
         header("Location: addWorker.php?success=1");
         exit;

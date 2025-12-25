@@ -6,7 +6,9 @@
 </head>
 <body class="farm-bg" margin="50px">
 <div class="topbar">
-        <button onclick="location.href='dashboard.php'">Home</button>
+        <button type="button" onclick="location.href='dashboard.php'" title="Home">
+            <img src="assets/img/barn.png">
+        </button>
         <button onclick="location.href='logout.php'">Logout</button>
 </div>
 <div class="panel">

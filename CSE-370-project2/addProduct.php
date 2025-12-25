@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,7 +5,12 @@
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="farm-bg" margin="50px">
-
+<div class="topbar">
+    <button type="button" onclick="location.href='dashboard.php'" title="Home">
+        <img src="assets/img/barn.png">
+    </button>
+    <button onclick="location.href='logout.php'">Logout</button>
+</div>
 <div class="panel">
     <h2>Add New Product</h2><br>
 </div>
@@ -14,7 +18,7 @@
 <?php
 // Include database connection
 require_once "db.php";
-
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
@@ -28,13 +32,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // NOTE: cattle_id is now auto-increment, so we don't include it
     $sql = "INSERT INTO  product (category,production_date,price,quantity)
             VALUES ('$category', '$production_date', '$price','$quantity')";
-
-    // Execute query
     if (mysqli_query($conn, $sql)) {
+        $product_id = $conn->insert_id;
+        $sql_ownproduct = "INSERT INTO owns_product (user_name, product_id) VALUES ('"
+    . mysqli_real_escape_string($conn, $_SESSION['user']) . "', "
+    . (int)$product_id . ")";
+    }
+    // Execute query
+    if (mysqli_query($conn, $sql_ownproduct)) {
         // Redirect after successful insert to avoid duplicate on reload (PRG pattern)
         header("Location: addProduct.php?success=1");
         exit;
-    } else {
+    } 
+    else {
         echo "<p style='color:red;'>Error adding cattle: " . mysqli_error($conn) . "</p>";
     }
 }
