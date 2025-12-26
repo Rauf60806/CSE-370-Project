@@ -71,25 +71,48 @@
                     <th>Age</th>
                     <th>Gender</th>
                     <th>Weight</th>
+                    <th>Sell</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 require_once "db.php";
                 session_start();
+                if (isset($_POST['sell_cattle_id'])) {
+                    $cattle_id = (int) $_POST['sell_cattle_id'];
+                    $user = mysqli_real_escape_string($conn, $_SESSION['user']);
+
+                    $sql_delete = "DELETE FROM owns_cattle
+                                WHERE cattle_id = $cattle_id
+                                AND user_name = '$user'";
+                    $sql_delete_cattle = "DELETE FROM cattle
+                                WHERE cattle_id = $cattle_id";
+
+                    mysqli_query($conn, $sql_delete);
+                    mysqli_query($conn, $sql_delete_cattle);
+                }
+                
                 $sql="SELECT * from cattle c join owns_cattle o on c.cattle_id = o.cattle_id WHERE o.user_name = '"
     .               mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
                 $result=mysqli_query($conn,$sql);
                 if (mysqli_num_rows($result)> 0) {
                 while ($row=mysqli_fetch_assoc($result)) {
-                    echo"<tr>
-                        <td>". $row["cattle_id"] ."</td>
-                        <td>". $row["cattle_type"] . "</td>
-                        <td>". $row["age"] ."</td>
-                        <td>". $row["gender"]. "</td>
-                        <td>". $row["weight"] ."</td>
-                    <tr>";
+                    echo "<tr>
+                        <td>{$row['cattle_id']}</td>
+                        <td>{$row['cattle_type']}</td>
+                        <td>{$row['age']}</td>
+                        <td>{$row['gender']}</td>
+                        <td>{$row['weight']}</td>
+                        <td>
+                            <form method='post' style='margin:0;'>
+                                <input type='hidden' name='sell_cattle_id' value='{$row['cattle_id']}'>
+                                <button type='submit' style='background:red;'>Sell</button>
+                            </form>
+                        </td>
+                    </tr>";
                 }
+            } else {
+                echo "<tr><td colspan='6'>No cattle found.</td></tr>";
             }
                 ?>
             </tbody>

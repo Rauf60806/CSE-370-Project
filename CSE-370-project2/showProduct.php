@@ -60,6 +60,9 @@
     </div>
     <div class="panel">
         <h2>List of products</h2><br>
+        <button>
+            <a href="addProduct.php">Add Product</a>
+        </button>
     </div>
         <table class="table">
             <thead>
@@ -69,12 +72,26 @@
                     <th>Production date</th>
                     <th>Price</th>
                     <th>Quantity</th>
+                    <th>Sell</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 require_once "db.php";
                 session_start();
+                if (isset($_POST['sell_product_id'])) {
+                    $product_id = (int) $_POST['sell_product_id'];
+                    $user = mysqli_real_escape_string($conn, $_SESSION['user']);
+
+                    $sql_delete = "DELETE FROM owns_product
+                                WHERE product_id = $product_id
+                                AND user_name = '$user'";
+                    $sql_delete_cattle = "DELETE FROM product
+                                WHERE product_id = $product_id";
+
+                    mysqli_query($conn, $sql_delete);
+                    mysqli_query($conn, $sql_delete_cattle);
+                }                
                 $sql="SELECT * from product c join owns_product p on c.product_id = p.product_id WHERE p.user_name = '"
     .               mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
                 $result=mysqli_query($conn,$sql);
@@ -86,8 +103,16 @@
                         <td>". $row["production_date"] ."</td>
                         <td>". $row["price"]. "</td>
                         <td>". $row["quantity"] ."</td>
-                    <tr>";
+                        <td>
+                            <form method='post' style='margin:0;'>
+                                <input type='hidden' name='sell_product_id' value='{$row['product_id']}'>
+                                <button type='submit' style='background:red;'>Sell</button>
+                            </form>
+                        </td>
+                    </tr>";
                 }
+            } else {
+                echo "<tr><td colspan='6'>No products found.</td></tr>";
             }
                 ?>
             </tbody>

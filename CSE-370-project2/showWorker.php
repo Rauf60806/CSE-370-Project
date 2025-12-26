@@ -70,12 +70,26 @@
                     <th>Name</th>
                     <th>Age</th>
                     <th>Salary</th>
+                    <th>Remove</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 require_once "db.php";
                 session_start();
+                if (isset($_POST['remove_worker_id'])) {
+                    $worker_id = (int) $_POST['remove_worker_id'];
+                    $user = mysqli_real_escape_string($conn, $_SESSION['user']);
+
+                    $sql_delete = "DELETE FROM owns_worker
+                                WHERE worker_id = $worker_id
+                                AND user_name = '$user'";
+                    $sql_delete_cattle = "DELETE FROM worker
+                                WHERE worker_id = $worker_id";
+
+                    mysqli_query($conn, $sql_delete);
+                    mysqli_query($conn, $sql_delete_cattle);
+                }
                 $sql="SELECT * from worker c join owns_worker w on c.worker_id = w.worker_id WHERE w.user_name = '"
     .               mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
                 $result=mysqli_query($conn,$sql);
@@ -86,8 +100,16 @@
                         <td>". $row["name"] . "</td>
                         <td>". $row["age"] ."</td>
                         <td>". $row["salary"]. "</td>
-                    <tr>";
+                        <td>
+                            <form method='post' style='margin:0;'>
+                                <input type='hidden' name='remove_worker_id' value='{$row['worker_id']}'>
+                                <button type='submit' style='background:red;'>Remove</button>
+                            </form>
+                        </td>
+                    </tr>";
                 }
+            } else {
+                echo "<tr><td colspan='6'>No workers found.</td></tr>";
             }
                 ?>
             </tbody>
