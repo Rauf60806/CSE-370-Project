@@ -6,10 +6,56 @@
 </head>
 <body class="farm-bg" margin="50px">
 <div class="topbar">
-    <button type="button" onclick="location.href='dashboard.php'" title="Home">
-        <img src="assets/img/barn.png">
-    </button>
-    <button onclick="location.href='logout.php'">Logout</button>
+        <button type="button" onclick="location.href='dashboard.php'" title="Home">
+            <img src="assets/img/barn.png">
+        </button>
+        <button onclick="showCattle()">
+            <img src="assets/img/cattle.png">
+        </button>
+        <button onclick="showWorker()">
+            <img src="assets/img/worker.png">
+        </button>
+        <button onclick="showProduct()">
+            <img src="assets/img/product.png">
+        </button>
+        <button onclick="medical_record()">
+            <img src="assets/img/medical.png">
+        </button>
+        <button onclick="medical_record()">
+            <img src="assets/img/wood.png">
+        </button>
+        <button style='background:red;' onclick="location.href='logout.php'">
+            <img src="assets/img/logout.png">
+        </button>
+    <script>
+    function Dashboard() {
+        window.location.href="dashboard.php"
+    }
+    function addCattle() {
+        window.location.href="add_cattle.php"
+    }
+    function showCattle() {
+        window.location.href="showcattle.php"
+    }
+    function addWorker() {
+        window.location.href="addWorker.php"
+    }
+    function showWorker() {
+        window.location.href="showWorker.php"
+    }
+    function addProduct() {
+        window.location.href="addProduct.php"
+    }
+    function showProduct() {
+        window.location.href="showProduct.php"
+    }
+    function medical_record() {
+        window.location.href="medical_record.php"
+    }
+    function addProduct() {
+        window.location.href="addProduct.php"
+    }
+    </script>
 </div>
 <div class="panel">
     <h2>Add New Worker</h2><br>
@@ -32,12 +78,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $age         = $_POST["age"];
     $salary      = $_POST["salary"];
     $work_hour   = $_POST["work_hour"];
-    $access_key  = $_POST["access_key"];
+    $contact  = $_POST["contact"];
 
     // SQL query to insert worker data
     // NOTE: worker_id is now auto-increment, so we don't include it
-    $sql = "INSERT INTO worker (name, age, salary, work_hour, access_key)
-            VALUES ('$name', '$age', '$salary', '$work_hour', '$access_key')";
+    $sql = "INSERT INTO worker (name, age, salary, work_hour,contact)
+            VALUES ('$name', '$age', '$salary', '$work_hour', '$contact')";
 
     if (mysqli_query($conn, $sql)) {
         $worker_id = $conn->insert_id;
@@ -95,7 +141,7 @@ if (isset($_GET['success'])) {
 
     <!-- Access Key input -->
     <div style="margin-bottom: 20px;">
-        <label style="font-weight: bold;">Access Key</label><br>
+        <label style="font-weight: bold;">contact Number</label><br>
         <input type="text" name="access_key" required style="width: 100%; padding: 8px; border-radius: 5px;">
     </div>
     <!-- Submit button -->

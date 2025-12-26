@@ -30,11 +30,40 @@ session_start();
         <button style='background:red;' onclick="location.href='logout.php'">
             <img src="assets/img/logout.png">
         </button>
+    <script>
+    function Dashboard() {
+        window.location.href="dashboard.php"
+    }
+    function addCattle() {
+        window.location.href="add_cattle.php"
+    }
+    function showCattle() {
+        window.location.href="showcattle.php"
+    }
+    function addWorker() {
+        window.location.href="addWorker.php"
+    }
+    function showWorker() {
+        window.location.href="showWorker.php"
+    }
+    function addProduct() {
+        window.location.href="addProduct.php"
+    }
+    function showProduct() {
+        window.location.href="showProduct.php"
+    }
+    function medical_record() {
+        window.location.href="medical_record.php"
+    }
+    function addProduct() {
+        window.location.href="addProduct.php"
+    }
+    </script>
     </div>
 
     <section id="header">
         <div class="panel">
-            <h2>🌾 Farmer Dashboard</h2>
+            <h2>🐄 Farmer Dashboard 🐐</h2>
             <h2>User: <?php echo $_SESSION["user"]; ?></h2>
         </div>
         <div class="panel">
