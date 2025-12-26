@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2025 at 04:52 PM
+-- Generation Time: Dec 26, 2025 at 09:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -76,7 +76,11 @@ INSERT INTO `cattle` (`cattle_id`, `age`, `gender`, `weight`, `cattle_type`) VAL
 (45, 500, 'Female', 1.00, 'Goat'),
 (46, 500, 'Female', 1.00, 'Goat'),
 (47, 500, 'Female', 1.00, 'Goat'),
-(48, 5, 'Male', 8.00, 'Cow');
+(48, 5, 'Male', 8.00, 'Cow'),
+(49, 5, 'Male', 60.00, 'Goat'),
+(50, 5, 'Male', 5.00, 'Goat'),
+(51, 5, 'Male', 5.00, 'Cow'),
+(52, 5, 'Male', 5.00, 'Cow');
 
 -- --------------------------------------------------------
 
@@ -87,18 +91,6 @@ INSERT INTO `cattle` (`cattle_id`, `age`, `gender`, `weight`, `cattle_type`) VAL
 CREATE TABLE `cow` (
   `cattle_id` int(11) NOT NULL,
   `cow_breed` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `customer`
---
-
-CREATE TABLE `customer` (
-  `customer_id` int(11) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `receipt_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -127,17 +119,6 @@ INSERT INTO `dashboard_panel` (`user_name`, `farm_name`, `Farm_location`, `pass`
 ('kafeee', 'dhaka', 'bangladesh', 'kafeee'),
 ('kulfi', 'dhaka', 'bangladesh', 'kulfi'),
 ('test', 'farmville', 'mirpur', 'test');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `experience`
---
-
-CREATE TABLE `experience` (
-  `worker_id` int(11) NOT NULL,
-  `experience` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -208,7 +189,11 @@ CREATE TABLE `owns_cattle` (
 --
 
 INSERT INTO `owns_cattle` (`user_name`, `cattle_id`) VALUES
-('Ahnaf Hossain Rauf', 48);
+('Ahnaf Hossain Rauf', 48),
+('Ahnaf Hossain Rauf', 49),
+('Ahnaf Hossain Rauf', 50),
+('Ahnaf Hossain Rauf', 51),
+('Ahnaf Hossain Rauf', 52);
 
 -- --------------------------------------------------------
 
@@ -293,17 +278,6 @@ CREATE TABLE `sheep` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supervises`
---
-
-CREATE TABLE `supervises` (
-  `registration_id` int(11) NOT NULL,
-  `worker_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `supplies`
 --
 
@@ -330,50 +304,18 @@ CREATE TABLE `surveillance` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `surveillance_access`
---
-
-CREATE TABLE `surveillance_access` (
-  `surveillance_id` int(11) NOT NULL,
-  `login_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `takes_care`
---
-
-CREATE TABLE `takes_care` (
-  `cattle_id` int(11) NOT NULL,
-  `worker_id` int(11) NOT NULL,
-  `time` time DEFAULT NULL,
-  `type` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `worker`
 --
 
 CREATE TABLE `worker` (
   `worker_id` int(11) NOT NULL,
+  `pass` varchar(10) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   `salary` decimal(10,2) DEFAULT NULL,
   `work_hour` int(11) DEFAULT NULL,
-  `access_key` int(11) DEFAULT NULL
+  `contact_number` int(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `worker`
---
-
-INSERT INTO `worker` (`worker_id`, `name`, `age`, `salary`, `work_hour`, `access_key`) VALUES
-(1, 'Admiral kalapahar', 30, 20000.00, 50, 123),
-(2, 'General Rambo', 60, 44000.00, 40, 333),
-(3, 'Rukaiya muntaha', 10, 1000.00, 24, 123);
 
 --
 -- Indexes for dumped tables
@@ -400,23 +342,11 @@ ALTER TABLE `cow`
   ADD PRIMARY KEY (`cattle_id`);
 
 --
--- Indexes for table `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`customer_id`);
-
---
 -- Indexes for table `dashboard_panel`
 --
 ALTER TABLE `dashboard_panel`
   ADD PRIMARY KEY (`user_name`),
   ADD UNIQUE KEY `user_name` (`user_name`);
-
---
--- Indexes for table `experience`
---
-ALTER TABLE `experience`
-  ADD PRIMARY KEY (`worker_id`);
 
 --
 -- Indexes for table `goat`
@@ -448,7 +378,8 @@ ALTER TABLE `medical_record`
 -- Indexes for table `owns_cattle`
 --
 ALTER TABLE `owns_cattle`
-  ADD KEY `cattle_id` (`cattle_id`);
+  ADD KEY `cattle_id` (`cattle_id`),
+  ADD KEY `user_name` (`user_name`);
 
 --
 -- Indexes for table `owns_product`
@@ -490,13 +421,6 @@ ALTER TABLE `sheep`
   ADD PRIMARY KEY (`cattle_id`);
 
 --
--- Indexes for table `supervises`
---
-ALTER TABLE `supervises`
-  ADD PRIMARY KEY (`registration_id`,`worker_id`),
-  ADD KEY `worker_id` (`worker_id`);
-
---
 -- Indexes for table `supplies`
 --
 ALTER TABLE `supplies`
@@ -510,25 +434,10 @@ ALTER TABLE `surveillance`
   ADD KEY `cattle_id` (`cattle_id`);
 
 --
--- Indexes for table `surveillance_access`
---
-ALTER TABLE `surveillance_access`
-  ADD PRIMARY KEY (`surveillance_id`,`login_id`),
-  ADD KEY `login_id` (`login_id`);
-
---
--- Indexes for table `takes_care`
---
-ALTER TABLE `takes_care`
-  ADD PRIMARY KEY (`cattle_id`,`worker_id`),
-  ADD KEY `worker_id` (`worker_id`);
-
---
 -- Indexes for table `worker`
 --
 ALTER TABLE `worker`
-  ADD PRIMARY KEY (`worker_id`),
-  ADD KEY `access_key` (`access_key`);
+  ADD PRIMARY KEY (`worker_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -538,13 +447,7 @@ ALTER TABLE `worker`
 -- AUTO_INCREMENT for table `cattle`
 --
 ALTER TABLE `cattle`
-  MODIFY `cattle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
-
---
--- AUTO_INCREMENT for table `customer`
---
-ALTER TABLE `customer`
-  MODIFY `customer_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cattle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `medical_record`
@@ -601,12 +504,6 @@ ALTER TABLE `cow`
   ADD CONSTRAINT `cow_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`);
 
 --
--- Constraints for table `experience`
---
-ALTER TABLE `experience`
-  ADD CONSTRAINT `experience_ibfk_1` FOREIGN KEY (`worker_id`) REFERENCES `worker` (`worker_id`);
-
---
 -- Constraints for table `goat`
 --
 ALTER TABLE `goat`
@@ -628,7 +525,8 @@ ALTER TABLE `medical_record`
 -- Constraints for table `owns_cattle`
 --
 ALTER TABLE `owns_cattle`
-  ADD CONSTRAINT `owns_cattle_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `owns_cattle_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `owns_cattle_ibfk_2` FOREIGN KEY (`user_name`) REFERENCES `dashboard_panel` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `owns_product`
