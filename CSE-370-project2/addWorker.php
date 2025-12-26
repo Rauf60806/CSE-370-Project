@@ -83,8 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // SQL query to insert worker data
     // NOTE: worker_id is now auto-increment, so we don't include it
-    $sql = "INSERT INTO worker (name,pass, age, salary, work_hour,contact)
-            VALUES ('$name','$pass', '$age', '$salary', '$work_hour', '$contact')";
+    $sql = "INSERT INTO worker (pass,name, age, salary, work_hour,contact_number)
+            VALUES ('$pass','$name', '$age', '$salary', '$work_hour', '$contact')";
 
     if (mysqli_query($conn, $sql)) {
         $worker_id = $conn->insert_id;
