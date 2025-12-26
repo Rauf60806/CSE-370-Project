@@ -75,6 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
     $name = $_POST["name"];
+    $pass = $_POST["pass"];
     $age         = $_POST["age"];
     $salary      = $_POST["salary"];
     $work_hour   = $_POST["work_hour"];
@@ -82,8 +83,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // SQL query to insert worker data
     // NOTE: worker_id is now auto-increment, so we don't include it
-    $sql = "INSERT INTO worker (name, age, salary, work_hour,contact)
-            VALUES ('$name', '$age', '$salary', '$work_hour', '$contact')";
+    $sql = "INSERT INTO worker (name,pass, age, salary, work_hour,contact)
+            VALUES ('$name','$pass', '$age', '$salary', '$work_hour', '$contact')";
 
     if (mysqli_query($conn, $sql)) {
         $worker_id = $conn->insert_id;
@@ -118,31 +119,34 @@ if (isset($_GET['success'])) {
     <!-- Name input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Name</label><br>
-        <input type="text" name="name" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="text" name="name" required >
     </div>
-
+    <div style="margin-bottom: 20px;">
+        <label style="font-weight: bold;">Password</label><br>
+        <input type="password" name="pass" required>
+    </div>
     <!-- Age input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Age</label><br>
-        <input type="number" name="age" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="number" name="age" required >
     </div>
 
     <!-- Salary input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Salary</label><br>
-        <input type="number" name="salary" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="number" name="salary" required >
     </div>
 
     <!-- Work Hour input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Work Hour</label><br>
-        <input type="number" name="work_hour" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="number" name="work_hour" required >
     </div>
 
     <!-- Access Key input -->
     <div style="margin-bottom: 20px;">
         <label style="font-weight: bold;">contact Number</label><br>
-        <input type="text" name="access_key" required style="width: 100%; padding: 8px; border-radius: 5px;">
+        <input type="text" name="access_key" required >
     </div>
     <!-- Submit button -->
     <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
