@@ -9,8 +9,8 @@ body {
     background-attachment: fixed;
 }
 .box, .panel, .row{
-    width: 500px;
-    margin: 60px auto;
+    width: auto;
+    margin: 100px 150px;
     background: rgba(255,255,255,0.95);
     padding: 25px;
     border-radius: 14px;
@@ -18,7 +18,7 @@ body {
 }
 h2 {
     text-align: center;
-    color: #2f6f3e;
+    color: #009879;
 }
 
 input, select, button {
@@ -30,14 +30,14 @@ input, select, button {
 }
 
 button {
-    background: #4caf50;
+    background: #00c9a1;
     color: white;
     border: none;
     cursor: pointer;
 }
 
 button:hover {
-    background: #388e3c;
+    background: #005444;
 }
 
 .tabs button {
@@ -74,7 +74,7 @@ button:hover {
     border-radius: 15px; /* Adjust this for more or less roundness */
     overflow: hidden;    /* Clips the inner rows to the rounded border */
 
-    margin: 20px auto;
+    margin: 100px auto;
     font-size: 0.9em;
     font-family: sans-serif;
     width: 500px;
@@ -124,9 +124,9 @@ button:hover {
 
     transform: translateY(-50%);
 
-    width: 70px;
+    width: 60px;
     height: auto;
-    background: rgba(255,255,255,0.75);
+    background: rgba(255,255,255);
     margin-left: 15px;
     display: flex;
     flex-direction: column;
@@ -145,13 +145,13 @@ button:hover {
 
 /* Buttons inside topbar */
 .topbar button {
-    width: 70px;
-    height: 70px; 
+    width: 60px;
+    height: 60px; 
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 10px rgba(0,0,0,.25);
-    background:#368d33;
+    background:#009879;
     border-radius: 50%;
     overflow: hidden; /* Keeps the image inside the circle */
     padding: 0;       /* Reset padding to let the image control size */
@@ -159,11 +159,115 @@ button:hover {
 
 /* Control the icon size */
 .topbar button img {
-    width: 45px;      /* Adjust this to make icon bigger/smaller */
-    height: 45px;     /* Match the width */
+    width: 40px;      /* Adjust this to make icon bigger/smaller */
+    height: 40px;     /* Match the width */
     object-fit: contain; /* Ensures icon doesn't stretch */
     filter: brightness(0) invert(1); /* OPTIONAL: Turns black icons white */
 }
 .topbar button:hover {
-    background: #22421a;
+    background: #004b3c;
 }
+/* notch ------------------------------------------*/
+.header-notch {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%); /* Centers the notch exactly */
+    
+    background-color: rgb(255,255,255);
+    color: white;
+    
+    /* Padding creates the size of the notch */
+    padding: 10px 40px; 
+    
+    /* Rounded only on the bottom corners */
+    border-radius: 0 0 25px 25px; 
+    
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1001; /* Higher than the sidebar to stay on top */
+    
+    /* Layout for text/logo inside */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-notch h1 {
+    color:#2f6f3e;
+    margin: 0px;
+    font-size: 1.2rem;
+    font-family: 'Segoe UI', sans-serif;
+    letter-spacing: 2px;
+    font-weight: 750;
+}
+
+.header-notch::before,
+.header-notch::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 25px;
+    height: 25px;
+    background: transparent;
+}
+
+.header-notch::before {
+    left: -25px;
+    border-radius: 0 10px 0 0;
+    box-shadow: 10px 0 0 0 rgb(255,255,255); /* Matches notch color */
+}
+
+.header-notch::after {
+    right: -25px;
+    border-radius: 10px 0 0 0;
+    box-shadow: -10px 0 0 0 rgb(255,255,255); /* Matches notch color */
+}
+
+
+
+
+
+/* Container that clears the fixed sidebar and notch */
+.main-content {
+    margin-left: 110px; /* Moves content away from your 70px sidebar */
+    margin-top: 120px;  /* Moves content below the header notch */
+    padding: 20px;
+}
+
+.stats-grid {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    min-width: 180px;
+    flex: 1;
+}
+
+.stat-card.highlight {
+    background: #009879;
+    color: white;
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.stat-card.highlight h3 { color: #e0e0e0; }
+
+.stat-number {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 10px 0 0 0;
+    color: #009879;
+}
+
+.stat-card.highlight .stat-number { color: white; }

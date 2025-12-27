@@ -6,8 +6,8 @@
 </head>
 <body class="farm-bg" margin="50px">
 
-<div class="panel">
-    <h2>Fill up the form</h2><br>
+<div class="header-notch">
+    <h2>Fill up the form</h2>
 </div>
 
 <?php
