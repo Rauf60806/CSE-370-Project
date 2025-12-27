@@ -34,6 +34,15 @@
 // Include database connection
 require_once "db.php";
 session_start();
+function addLog($conn, $user, $action) {
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $user = mysqli_real_escape_string($conn, $user);
+    $action = mysqli_real_escape_string($conn, $action);
+    $sql = "INSERT INTO activity_logs (who, did_what, log_date, log_time) 
+            VALUES ('$user', '$action', '$date', '$time')";
+    mysqli_query($conn, $sql);}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
@@ -55,7 +64,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // Execute query
     if (mysqli_query($conn, $sql_ownproduct)) {
-        // Redirect after successful insert to avoid duplicate on reload (PRG pattern)
+            // --- AUTOMATIC LOG START ---
+            $log_message = "Added a new $cattle_type (Weight: $weight kg, Gender: $gender)";
+            addLog($conn, $_SESSION['user'], $log_message);
+            // --- AUTOMATIC LOG END ---
         header("Location: addProduct.php?success=1");
         exit;
     } 

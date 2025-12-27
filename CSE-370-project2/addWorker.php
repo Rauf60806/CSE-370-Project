@@ -26,20 +26,24 @@
     function showLog() {window.location.href="report.php"}
     </script>
 </div>
-<div class="panel">
-    <h2>Add New Worker</h2><br>
-</div>
-
+    <div class="header-notch">
+        <h1>Register New Workers</h1>
+    </div>
+<div class = "panel" style="max-width: 430px; margin: 100px auto;">
 <?php
 // Include database connection
 require_once "db.php";
 session_start();
-/*
-|--------------------------------------------------------------------------
-| HANDLE FORM SUBMISSION
-|--------------------------------------------------------------------------
-| This block runs ONLY when the form is submitted using POST
-*/
+
+function addLog($conn, $user, $action) {
+    $date = date("Y-m-d");
+    $time = date("H:i:s");
+    $user = mysqli_real_escape_string($conn, $user);
+    $action = mysqli_real_escape_string($conn, $action);
+    $sql = "INSERT INTO activity_logs (who, did_what, log_date, log_time) 
+            VALUES ('$user', '$action', '$date', '$time')";
+    mysqli_query($conn, $sql);}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Read form values safely
@@ -63,7 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // Execute query
     if (mysqli_query($conn, $sql_ownworker)) {
-        // Redirect after successful insert to avoid duplicate on reload (PRG pattern)
+            // --- AUTOMATIC LOG START ---
+            $log_message = "Added a new $cattle_type (Weight: $weight kg, Gender: $gender)";
+            addLog($conn, $_SESSION['user'], $log_message);
+            // --- AUTOMATIC LOG END ---
         header("Location: addWorker.php?success=1");
         exit;
     } else {
@@ -73,49 +80,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Show success message if redirected after insert
 if (isset($_GET['success'])) {
-    echo "<h2 style='color:white;'>Worker added successfully</h2>";
+    echo "<h2>Worker added successfully</h2>";
 }
 ?>
-
-<!--
-| ADD WORKER FORM
-|--------------------------------------------------------------------------
-| This form collects worker information from the user
--->
-<div class = "panel">
 <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">
 
     <!-- Name input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Name</label><br>
-        <input type="text" name="name" required >
+        <input type="text" name="name" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
     <div style="margin-bottom: 20px;">
         <label style="font-weight: bold;">Password</label><br>
-        <input type="password" name="pass" required>
+        <input type="password" name="pass" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
     <!-- Age input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Age</label><br>
-        <input type="number" name="age" required >
+        <input type="number" name="age" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
 
     <!-- Salary input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Salary</label><br>
-        <input type="number" name="salary" required >
+        <input type="number" name="salary" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
 
     <!-- Work Hour input -->
     <div style="margin-bottom: 15px;">
-        <label style="font-weight: bold;">Work Hour</label><br>
-        <input type="number" name="work_hour" required >
+        <label style="font-weight: bold;">Work Hour [Per Week]</label><br>
+        <input type="number" name="work_hour" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
 
     <!-- Access Key input -->
     <div style="margin-bottom: 20px;">
-        <label style="font-weight: bold;">contact Number</label><br>
-        <input type="text" name="access_key" required >
+        <label style="font-weight: bold;">Contact Number</label><br>
+        <input type="text" name="access_key" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
     <!-- Submit button -->
     <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
