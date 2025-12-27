@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2025 at 09:33 AM
+-- Generation Time: Dec 27, 2025 at 01:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,8 @@ CREATE TABLE `activity_logs` (
 
 INSERT INTO `activity_logs` (`report_id`, `who`, `did_what`, `log_date`, `log_time`) VALUES
 (1, 'Ahnaf Hossain Rauf', 'Added a new Cow (Weight: 60 kg, Gender: Male)', '2025-12-27', '08:15:04'),
-(2, 'Ahnaf Hossain Rauf', 'Added a new  (Weight:  kg, Gender: )', '2025-12-27', '08:49:14');
+(2, 'Ahnaf Hossain Rauf', 'Added a new  (Weight:  kg, Gender: )', '2025-12-27', '08:49:14'),
+(3, 'Ahnaf Hossain Rauf', 'Added a new Cow (Weight: 2 kg, Gender: Male)', '2025-12-27', '13:41:24');
 
 -- --------------------------------------------------------
 
@@ -102,7 +103,8 @@ INSERT INTO `cattle` (`cattle_id`, `age`, `gender`, `weight`, `cattle_type`) VAL
 (51, 5, 'Male', 5.00, 'Cow'),
 (52, 5, 'Male', 5.00, 'Cow'),
 (53, 69, 'Male', 96.00, 'Cow'),
-(54, 500, 'Male', 60.00, 'Cow');
+(54, 500, 'Male', 60.00, 'Cow'),
+(55, 60, 'Male', 2.00, 'Cow');
 
 -- --------------------------------------------------------
 
@@ -198,7 +200,8 @@ INSERT INTO `owns_cattle` (`user_name`, `cattle_id`) VALUES
 ('Ahnaf Hossain Rauf', 51),
 ('Ahnaf Hossain Rauf', 52),
 ('Ahnaf Hossain Rauf', 53),
-('Ahnaf Hossain Rauf', 54);
+('Ahnaf Hossain Rauf', 54),
+('Ahnaf Hossain Rauf', 55);
 
 -- --------------------------------------------------------
 
@@ -455,13 +458,13 @@ ALTER TABLE `worker`
 -- AUTO_INCREMENT for table `activity_logs`
 --
 ALTER TABLE `activity_logs`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `cattle`
 --
 ALTER TABLE `cattle`
-  MODIFY `cattle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `cattle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `medical_record`
