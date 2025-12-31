@@ -18,12 +18,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Read form values safely
     $user_name = $_POST["user_name"];
     $farm_name = $_POST["farm_name"];
+    $email = $_POST["email"];
     $Farm_location  = $_POST["Farm_location"];
     $pass      = $_POST["pass"];
 
     // id is auto increment
-    $sql = "INSERT INTO dashboard_panel (user_name, farm_name, Farm_location, pass)
-            VALUES ('$user_name', '$farm_name', '$Farm_location', '$pass')";
+    $sql = "INSERT INTO dashboard_panel (user_name,email,farm_name, Farm_location, pass)
+            VALUES ('$user_name','$email', '$farm_name', '$Farm_location', '$pass')";
 
     // Execute query
     if (mysqli_query($conn, $sql)) {
@@ -45,6 +46,12 @@ if (isset($_GET['success'])) {
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">User Name</label><br>
         <input type="text" name="user_name" required style="width: 400px; padding: 8px; border-radius: 5px;">
+    </div>
+
+    <!-- Email input -->
+    <div style="margin-bottom: 15px;">
+        <label style="font-weight: bold;">Email</label><br>
+        <input type="email" name="email" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
 
     <!-- Farm Name input -->
