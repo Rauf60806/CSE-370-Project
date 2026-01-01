@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2025 at 01:46 PM
+-- Generation Time: Jan 01, 2026 at 12:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -42,7 +42,42 @@ CREATE TABLE `activity_logs` (
 INSERT INTO `activity_logs` (`report_id`, `who`, `did_what`, `log_date`, `log_time`) VALUES
 (1, 'Ahnaf Hossain Rauf', 'Added a new Cow (Weight: 60 kg, Gender: Male)', '2025-12-27', '08:15:04'),
 (2, 'Ahnaf Hossain Rauf', 'Added a new  (Weight:  kg, Gender: )', '2025-12-27', '08:49:14'),
-(3, 'Ahnaf Hossain Rauf', 'Added a new Cow (Weight: 2 kg, Gender: Male)', '2025-12-27', '13:41:24');
+(3, 'Ahnaf Hossain Rauf', 'Added a new Cow (Weight: 2 kg, Gender: Male)', '2025-12-27', '13:41:24'),
+(4, 'Ahnaf Hossain Rauf', 'Sold Cattle ID: #51', '2025-12-27', '13:52:02'),
+(5, 'Ahnaf Hossain Rauf', 'Added a new Goat (Weight: 30 kg, Gender: Male)', '2025-12-27', '13:54:05'),
+(6, 'Ahnaf Hossain Rauf', 'Added a new Sheep (Weight: 11 kg, Gender: Female)', '2025-12-27', '13:54:33'),
+(7, 'Ahnaf Hossain Rauf', 'Added a new  (Weight:  kg, Gender: )', '2025-12-27', '13:54:52'),
+(8, 'Ahnaf Hossain Rauf', 'Added a new Goat (Weight: 40 kg, Gender: Male)', '2025-12-30', '13:24:29'),
+(9, 'Ahnaf Hossain Rauf', 'Added a new  (Weight:  kg, Gender: )', '2025-12-30', '13:25:57'),
+(10, 'Fuad', 'Added a new Cow (Weight: 200 kg, Gender: Male)', '2025-12-30', '13:41:14'),
+(11, 'Fuad', 'Added a new Cow (Weight: 180 kg, Gender: Male)', '2025-12-30', '13:41:25'),
+(12, 'Fuad', 'Added a new Cow (Weight: 170 kg, Gender: Male)', '2025-12-30', '13:41:34'),
+(13, 'Fuad', 'Added a new Cow (Weight: 195 kg, Gender: Male)', '2025-12-30', '13:41:51'),
+(14, 'Fuad', 'Added a new Cow (Weight: 210 kg, Gender: Male)', '2025-12-30', '13:42:05'),
+(15, 'Fuad', 'Added a new Cow (Weight: 200 kg, Gender: Male)', '2025-12-30', '13:42:20'),
+(16, 'Fuad', 'Added a new Cow (Weight: 240 kg, Gender: Female)', '2025-12-30', '13:42:31'),
+(17, 'Fuad', 'Added a new Cow (Weight: 220 kg, Gender: Female)', '2025-12-30', '13:42:42'),
+(18, 'Fuad', 'Added a new Cow (Weight: 150 kg, Gender: Female)', '2025-12-30', '13:42:53'),
+(19, 'Fuad', 'Added a new Cow (Weight: 200 kg, Gender: Female)', '2025-12-30', '13:53:03'),
+(20, 'Fuad', 'Added a new Cow (Weight: 230 kg, Gender: Male)', '2025-12-30', '13:53:11'),
+(21, 'Fuad', 'Added a new Cow (Weight: 190 kg, Gender: Male)', '2025-12-30', '13:53:23'),
+(22, 'Fuad', 'Added a new  (Weight:  kg, Gender: )', '2025-12-31', '18:28:34'),
+(23, 'Fuad', 'Added a new  (Weight:  kg, Gender: )', '2025-12-31', '18:30:17'),
+(24, 'Fuad', 'Added new inventory item (Rake), Quantity: , Price: 600', '2026-01-01', '07:13:50'),
+(25, 'Fuad', 'Added new inventory item (Hay), Quantity: 4, Price: 300', '2026-01-01', '07:43:31'),
+(26, 'Fuad', 'Added new inventory item (Water), Quantity: 6, Price: 300', '2026-01-01', '07:45:15'),
+(27, 'Fuad', 'Added new inventory item (Shovel), Quantity: 6, Price: 300', '2026-01-01', '07:45:23'),
+(28, 'Fuad', 'Added new inventory item (Fence), Quantity: 10, Price: 400', '2026-01-01', '07:45:36'),
+(29, 'Fuad', 'Added new inventory item (Safety equipment set), Quantity: 5, Price: 600', '2026-01-01', '07:45:45'),
+(30, 'Fuad', 'Added new inventory item (Shovel), Quantity: 4, Price: 100', '2026-01-01', '08:10:26'),
+(31, 'Fuad', 'Deleted inventory item ID: 7', '2026-01-01', '08:19:03'),
+(32, 'Fuad', 'Deleted inventory item ID: 7', '2026-01-01', '08:19:12'),
+(33, 'Fuad', 'Deleted inventory item ID: 7', '2026-01-01', '08:20:55'),
+(34, 'Fuad', 'Deleted inventory item ID: 7', '2026-01-01', '08:21:00'),
+(35, 'Fuad', 'Deleted inventory item ID: 5', '2026-01-01', '08:21:13'),
+(36, 'Fuad', 'Added new inventory item (Hay), Quantity: 5, Price: 100', '2026-01-01', '08:21:26'),
+(37, 'Fuad', 'Added a new Goat (Weight: 40 kg, Gender: Male)', '2026-01-01', '08:26:38'),
+(38, 'Fuad', 'Added a new Sheep (Weight: 26 kg, Gender: Female)', '2026-01-01', '08:35:54');
 
 -- --------------------------------------------------------
 
@@ -99,12 +134,25 @@ INSERT INTO `cattle` (`cattle_id`, `age`, `gender`, `weight`, `cattle_type`) VAL
 (45, 500, 'Female', 1.00, 'Goat'),
 (46, 500, 'Female', 1.00, 'Goat'),
 (47, 500, 'Female', 1.00, 'Goat'),
-(50, 5, 'Male', 5.00, 'Goat'),
-(51, 5, 'Male', 5.00, 'Cow'),
 (52, 5, 'Male', 5.00, 'Cow'),
 (53, 69, 'Male', 96.00, 'Cow'),
 (54, 500, 'Male', 60.00, 'Cow'),
-(55, 60, 'Male', 2.00, 'Cow');
+(56, 6, 'Male', 30.00, 'Goat'),
+(57, 5, 'Female', 11.00, 'Sheep'),
+(58, 4, 'Male', 40.00, 'Goat'),
+(60, 9, 'Male', 180.00, 'Cow'),
+(61, 8, 'Male', 170.00, 'Cow'),
+(62, 9, 'Male', 195.00, 'Cow'),
+(63, 11, 'Male', 210.00, 'Cow'),
+(64, 12, 'Male', 200.00, 'Cow'),
+(65, 7, 'Female', 240.00, 'Cow'),
+(66, 8, 'Female', 220.00, 'Cow'),
+(67, 5, 'Female', 150.00, 'Cow'),
+(68, 9, 'Female', 200.00, 'Cow'),
+(69, 8, 'Male', 230.00, 'Cow'),
+(70, 6, 'Male', 190.00, 'Cow'),
+(71, 5, 'Male', 40.00, 'Goat'),
+(72, 2, 'Female', 26.00, 'Sheep');
 
 -- --------------------------------------------------------
 
@@ -136,7 +184,8 @@ CREATE TABLE `dashboard_panel` (
 --
 
 INSERT INTO `dashboard_panel` (`user_name`, `email`, `farm_name`, `Farm_location`, `pass`) VALUES
-('Ahnaf Hossain Rauf', '', 'Gazipur Wool Factory', 'Gazipur', 'Rauf123');
+('Ahnaf Hossain Rauf', '', 'Gazipur Wool Factory', 'Gazipur', 'Rauf123'),
+('Fuad', 'Fuad@gmail.com', 'Farmville', 'Mirpur', 'fuad');
 
 -- --------------------------------------------------------
 
@@ -158,10 +207,24 @@ CREATE TABLE `goat` (
 
 CREATE TABLE `inventory` (
   `purchase_id` int(11) NOT NULL,
+  `user_name` varchar(255) NOT NULL,
+  `inventory_type` varchar(255) NOT NULL,
   `amount` int(11) DEFAULT NULL,
   `purchase_date` date DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`purchase_id`, `user_name`, `inventory_type`, `amount`, `purchase_date`, `price`) VALUES
+(1, 'Fuad', 'Rake', 6, '2026-01-01', 600.00),
+(2, 'Fuad', 'Hay', 4, '2026-01-01', 300.00),
+(3, 'Fuad', 'Water', 6, '2026-01-01', 300.00),
+(4, 'Fuad', 'Shovel', 6, '2026-01-01', 300.00),
+(6, 'Fuad', 'Safety equipment set', 5, '2026-01-01', 600.00),
+(8, 'Fuad', 'Hay', 5, '2026-01-08', 100.00);
 
 -- --------------------------------------------------------
 
@@ -196,12 +259,25 @@ CREATE TABLE `owns_cattle` (
 --
 
 INSERT INTO `owns_cattle` (`user_name`, `cattle_id`) VALUES
-('Ahnaf Hossain Rauf', 50),
-('Ahnaf Hossain Rauf', 51),
 ('Ahnaf Hossain Rauf', 52),
 ('Ahnaf Hossain Rauf', 53),
 ('Ahnaf Hossain Rauf', 54),
-('Ahnaf Hossain Rauf', 55);
+('Ahnaf Hossain Rauf', 56),
+('Ahnaf Hossain Rauf', 57),
+('Ahnaf Hossain Rauf', 58),
+('Fuad', 60),
+('Fuad', 61),
+('Fuad', 62),
+('Fuad', 63),
+('Fuad', 64),
+('Fuad', 65),
+('Fuad', 66),
+('Fuad', 67),
+('Fuad', 68),
+('Fuad', 69),
+('Fuad', 70),
+('Fuad', 71),
+('Fuad', 72);
 
 -- --------------------------------------------------------
 
@@ -219,7 +295,9 @@ CREATE TABLE `owns_product` (
 --
 
 INSERT INTO `owns_product` (`user_name`, `product_id`) VALUES
-('Ahnaf Hossain Rauf', 2);
+('Ahnaf Hossain Rauf', 2),
+('Ahnaf Hossain Rauf', 3),
+('Fuad', 4);
 
 -- --------------------------------------------------------
 
@@ -238,7 +316,9 @@ CREATE TABLE `owns_worker` (
 
 INSERT INTO `owns_worker` (`user_name`, `worker_id`) VALUES
 ('Ahnaf Hossain Rauf', '4'),
-('Ahnaf Hossain Rauf', '5');
+('Ahnaf Hossain Rauf', '5'),
+('Ahnaf Hossain Rauf', '6'),
+('Fuad', '7');
 
 -- --------------------------------------------------------
 
@@ -260,7 +340,9 @@ CREATE TABLE `product` (
 
 INSERT INTO `product` (`product_id`, `category`, `production_date`, `price`, `quantity`) VALUES
 (1, 'Milk', '0000-00-00', 100.00, 5),
-(2, 'Meat', '2025-12-27', 700.00, 100);
+(2, 'Meat', '2025-12-27', 700.00, 100),
+(3, 'Wool', '2025-12-27', 700.00, 5),
+(4, 'Milk', '2025-12-31', 70.00, 1);
 
 -- --------------------------------------------------------
 
@@ -333,7 +415,9 @@ CREATE TABLE `worker` (
 
 INSERT INTO `worker` (`worker_id`, `pass`, `name`, `age`, `salary`, `work_hour`, `contact_number`) VALUES
 (4, '12345678', 'naomi', 24, 24000.00, 6, 0),
-(5, 'eufuwbuif', 'raj', 25, 25000.00, 6, 0);
+(5, 'eufuwbuif', 'raj', 25, 25000.00, 6, 0),
+(6, 'joif', 'Sheikh Joifullah', 25, 500.00, 10, 0),
+(7, 'vai', 'Major vai', 40, 50000.00, 45, 0);
 
 --
 -- Indexes for dumped tables
@@ -458,13 +542,19 @@ ALTER TABLE `worker`
 -- AUTO_INCREMENT for table `activity_logs`
 --
 ALTER TABLE `activity_logs`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `cattle`
 --
 ALTER TABLE `cattle`
-  MODIFY `cattle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `cattle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+
+--
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `medical_record`
@@ -476,7 +566,7 @@ ALTER TABLE `medical_record`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `purchases`
@@ -494,70 +584,17 @@ ALTER TABLE `surveillance`
 -- AUTO_INCREMENT for table `worker`
 --
 ALTER TABLE `worker`
-  MODIFY `worker_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `worker_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `buys`
---
-ALTER TABLE `buys`
-  ADD CONSTRAINT `buys_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`),
-  ADD CONSTRAINT `buys_ibfk_2` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`),
-  ADD CONSTRAINT `buys_ibfk_3` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`);
-
---
 -- Constraints for table `cow`
 --
 ALTER TABLE `cow`
   ADD CONSTRAINT `cow_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`);
-
---
--- Constraints for table `goat`
---
-ALTER TABLE `goat`
-  ADD CONSTRAINT `goat_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`);
-
---
--- Constraints for table `inventory`
---
-ALTER TABLE `inventory`
-  ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`purchase_id`) REFERENCES `purchases` (`purchase_id`);
-
---
--- Constraints for table `medical_record`
---
-ALTER TABLE `medical_record`
-  ADD CONSTRAINT `medical_record_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`);
-
---
--- Constraints for table `owns_cattle`
---
-ALTER TABLE `owns_cattle`
-  ADD CONSTRAINT `owns_cattle_ibfk_1` FOREIGN KEY (`cattle_id`) REFERENCES `cattle` (`cattle_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `owns_cattle_ibfk_2` FOREIGN KEY (`user_name`) REFERENCES `dashboard_panel` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `owns_product`
---
-ALTER TABLE `owns_product`
-  ADD CONSTRAINT `owns_product_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `owns_product_ibfk_2` FOREIGN KEY (`user_name`) REFERENCES `dashboard_panel` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `owns_worker`
---
-ALTER TABLE `owns_worker`
-  ADD CONSTRAINT `owns_worker_ibfk_1` FOREIGN KEY (`user_name`) REFERENCES `dashboard_panel` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `purchases`
---
-ALTER TABLE `purchases`
-  ADD CONSTRAINT `purchases_ibfk_1` FOREIGN KEY (`purchase_id`) REFERENCES `inventory` (`purchase_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `purchases_ibfk_2` FOREIGN KEY (`user_name`) REFERENCES `dashboard_panel` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
