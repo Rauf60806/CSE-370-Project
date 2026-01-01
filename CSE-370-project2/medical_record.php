@@ -19,7 +19,7 @@ function analyzeCattle($data) {
         $expected = $m * $c['age'];
         $deviation = abs($c['weight'] - $expected);
 
-        if ($deviation > (0.20 * $expected)) {
+        if ($deviation > (0.30 * $expected)) {
             $c['expected_weight'] = round($expected, 2);
             $c['deviation'] = round($deviation, 2);
             $outliers[] = $c;
