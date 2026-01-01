@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Execute query
     if (mysqli_query($conn, $sql_ownworker)) {
             // --- AUTOMATIC LOG START ---
-            $log_message = "Added a new Worker (ID: $worker_id kg, Contact: $contact)";
+            $log_message = "Added a new Worker (ID: $worker_id, Contact: $contact)";
             addLog($conn, $_SESSION['user'], $_SESSION['worker'], $log_message);
             // --- AUTOMATIC LOG END ---
         header("Location: addWorker.php?success=1");
@@ -127,7 +127,7 @@ if (isset($_GET['success'])) {
     <!-- Access Key input -->
     <div style="margin-bottom: 20px;">
         <label style="font-weight: bold;">Contact Number</label><br>
-        <input type="text" name="access_key" required style="width: 400px; padding: 8px; border-radius: 5px;">
+        <input type="text" name="contact" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
     <!-- Submit button -->
     <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">

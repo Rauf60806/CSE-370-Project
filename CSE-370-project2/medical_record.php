@@ -1,7 +1,15 @@
 <?php
 require_once "db.php";
 session_start();
-//function to analyze cattle data and find outliers
+
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$current_user = $_SESSION['user'];
+
+// --- ANALYTICS FUNCTION ---
 function analyzeCattle($data) {
     $sumXY = 0;
     $sumXX = 0;
@@ -12,7 +20,7 @@ function analyzeCattle($data) {
 
     if ($sumXX == 0) return [0, []];
 
-    $m = $sumXY / $sumXX; // slope
+    $m = $sumXY / $sumXX; 
 
     $outliers = [];
     foreach ($data as $c) {
@@ -25,181 +33,209 @@ function analyzeCattle($data) {
             $outliers[] = $c;
         }
     }
-
     return [$m, $outliers];
 }
 
-/*
-|--------------------------------------------------------------------------
-| FETCH DATA
-|--------------------------------------------------------------------------
-*/
+// FETCH DATA
 $sql = "SELECT c.cattle_id, c.age, c.weight, c.cattle_type FROM cattle c
-JOIN owns_cattle o ON c.cattle_id = o.cattle_id WHERE o.user_name = '"
-. mysqli_real_escape_string($conn, $_SESSION['user']) . "'";
+        JOIN owns_cattle o ON c.cattle_id = o.cattle_id 
+        WHERE o.user_name = '" . mysqli_real_escape_string($conn, $current_user) . "'";
 $result = mysqli_query($conn, $sql);
 
-$cow = $goat = $sheep = [];
+$cow = []; $goat = []; $sheep = [];
 
 while ($row = mysqli_fetch_assoc($result)) {
+    $row['age'] = (float)$row['age'];
+    $row['weight'] = (float)$row['weight'];
     if ($row['cattle_type'] === 'Cow') $cow[] = $row;
     elseif ($row['cattle_type'] === 'Goat') $goat[] = $row;
     elseif ($row['cattle_type'] === 'Sheep') $sheep[] = $row;
 }
 
 list($cowSlope, $cowOutliers)     = analyzeCattle($cow);
-list($goatSlope, $goatOutliers)  = analyzeCattle($goat);
-list($sheepSlope, $sheepOutliers)= analyzeCattle($sheep);
+list($goatSlope, $goatOutliers)   = analyzeCattle($goat);
+list($sheepSlope, $sheepOutliers) = analyzeCattle($sheep);
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Medical Record</title>
     <link rel="stylesheet" href="assets/style.css">
-</head>
+    <style>
+        /* NEW STYLES FOR ROW LAYOUT */
+        .analysis-row {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping on small screens */
+            justify-content: center;
+            align-items: flex-start;
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        
+        /* Graph Container */
+        .chart-box {
+            flex: 2; /* Takes up more space */
+            min-width: 400px;
+            max-width: 700px;
+            text-align: center;
+        }
 
+        /* Table Container */
+        .table-box {
+            flex: 1; /* Takes up less space */
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        /* Adjust canvas to be responsive */
+        canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+    </style>
+</head>
 <body class="farm-bg">
-</div>
-<div class="topbar">
-        <button onclick="profile()"><img src="assets/img/farmer.png"></button>
-        <button type="button" onclick="location.href='dashboard.php'" title="Home"><img src="assets/img/barn.png"></button>
-        <button onclick="showCattle()"><img src="assets/img/cattle.png"></button>
-        <button onclick="showWorker()"><img src="assets/img/worker.png"></button>
-        <button onclick="showProduct()"><img src="assets/img/product.png"></button>
-        <button onclick="medical_record()"><img src="assets/img/medical.png"></button>
-        <button onclick="showinvent()"><img src="assets/img/market.png"></button>
-        <button onclick="showLog()"><img src="assets/img/wood.png"></button>
+
+    <div class="header-notch"><h1>Medical Record</h1></div>
+
+    <div class="topbar">
+        <button onclick="location.href='profile.php'"><img src="assets/img/farmer.png"></button>
+        <button onclick="location.href='dashboard.php'"><img src="assets/img/barn.png"></button>
+        <button onclick="location.href='showcattle.php'"><img src="assets/img/cattle.png"></button>
+        <button onclick="location.href='showWorker.php'"><img src="assets/img/worker.png"></button>
+        <button onclick="location.href='showProduct.php'"><img src="assets/img/product.png"></button>
+        <button onclick="location.href='medical_record.php'" class="active"><img src="assets/img/medical.png"></button>
+        <button onclick="location.href='showInventory.php'"><img src="assets/img/market.png"></button>
+        <button onclick="location.href='report.php'"><img src="assets/img/wood.png"></button>
         <button style='background:red;' onclick="location.href='logout.php'"><img src="assets/img/logout.png"></button>
-    <script>
-    function profile() {window.location.href="profile.php"}
-    function Dashboard() {window.location.href="dashboard.php"}
-    function addCattle() {window.location.href="add_cattle.php"}
-    function showCattle() {window.location.href="showcattle.php"}
-    function addWorker() {window.location.href="addWorker.php"}
-    function showWorker() {window.location.href="showWorker.php"}
-    function addProduct() {window.location.href="addProduct.php"}
-    function showProduct() {window.location.href="showProduct.php"}
-    function medical_record() {window.location.href="medical_record.php"}
-    function addProduct() {window.location.href="addProduct.php"}
-    function showLog() {window.location.href="report.php"}
-    function showinvent(){window.location.href="showInventory.php"}
-    function addinvent(){window.location.href="addInventory.php"}
-    </script>
-</div>
-    <div class="header-notch">
-        <h1>Medical Record</h1>
     </div>
 
-<!-- ===================== GRAPHS ===================== -->
-<?php
-function renderGraph($id, $title) {
-    echo "
-    <div class='box' style='text-align:center; width:750px; margin-top:100px;'>
-        <h2>$title</h2>
-        <canvas id='$id' width='700' height='400'
-                style='background:#fff; border:1px solid #333;'></canvas>
-    </div>";
-}
+    <div class="main-content">
 
+        <?php
+        // A single function to render the whole row (Graph + Table)
+        function renderSection($title, $canvasId, $outliers, $data) {
+            if (empty($data)) return; // Don't show anything if no animals exist
 
-function renderOutliers($title, $data) {
-    if (empty($data)) return;
+            echo "<div class='analysis-row'>";
+            
+            // 1. GRAPH BOX
+            echo "
+            <div class='box chart-box'>
+                <h2>$title Graph</h2>
+                <canvas id='$canvasId' width='600' height='350'></canvas>
+            </div>";
 
-    echo "
-    <div class='box'>
-        <h3>$title</h3>
-        <table class='table'>
-            <tr>
-                <th>ID</th>
-                <th>Age</th>
-                <th>Weight</th>
-                <th>Expected</th>
-                <th>Deviation</th>
-            </tr>";
-    foreach ($data as $c) {
-        echo "
-            <tr>
-                <td>{$c['cattle_id']}</td>
-                <td>{$c['age']}</td>
-                <td>{$c['weight']}</td>
-                <td>{$c['expected_weight']}</td>
-                <td style='color:red;font-weight:bold;'>{$c['deviation']}</td>
-            </tr>";
-    }
-    echo "</table></div>";
-}
-renderGraph("cowGraph", "Cow: Weight vs Age");
-renderOutliers("Cows Needing Attention", $cowOutliers);
+            // 2. TABLE BOX (Only if outliers exist)
+            if (!empty($outliers)) {
+                echo "
+                <div class='box table-box' style='border-top: 5px solid #d32f2f;'>
+                    <h3 style='color:#d32f2f; text-align:center;'>⚠️ Attention Needed</h3>
+                    <table class='table' style='width:100%; margin: 10px 0; font-size:0.85em;'>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Exp. (kg)</th>
+                                <th>Dev.</th>
+                            </tr>
+                        </thead>
+                        <tbody>";
+                foreach ($outliers as $c) {
+                    echo "
+                        <tr>
+                            <td>#{$c['cattle_id']}</td>
+                            <td>{$c['expected_weight']}</td>
+                            <td style='color:red; font-weight:bold;'>{$c['deviation']}</td>
+                        </tr>";
+                }
+                echo "</tbody></table></div>";
+            }
 
-renderGraph("goatGraph", "Goat: Weight vs Age");
-renderOutliers("Goats Needing Attention", $goatOutliers);
+            echo "</div>"; // End analysis-row
+        }
 
-renderGraph("sheepGraph", "Sheep: Weight vs Age");
-renderOutliers("Sheep Needing Attention", $sheepOutliers);
+        // Render the 3 sections
+        renderSection("Cow",   "cowGraph",   $cowOutliers,   $cow);
+        renderSection("Goat",  "goatGraph",  $goatOutliers,  $goat);
+        renderSection("Sheep", "sheepGraph", $sheepOutliers, $sheep);
+        
+        if(empty($cow) && empty($goat) && empty($sheep)){
+            echo "<div class='box' style='text-align:center;'><h3>No Cattle Data Found to Analyze</h3></div>";
+        }
+        ?>
 
+    </div>
 
-?>
+    <script>
+    function drawGraph(canvasId, data, slope, color) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
 
-<!-- scripts.. -->
-<script>
-function drawGraph(canvasId, data, slope, color) {
-    if (data.length === 0) return;
+        const ctx = canvas.getContext("2d");
+        
+        // Use internal coordinate system, CSS handles display size
+        const padding = 50; 
+        const width = canvas.width - padding * 2;
+        const height = canvas.height - padding * 2;
 
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext("2d");
+        const maxAge = Math.max(...data.map(d => d.age)) + 5;
+        const maxWeight = Math.max(...data.map(d => d.weight), slope * maxAge) + 10;
 
-    const padding = 60;
-    const width = canvas.width - padding * 2;
-    const height = canvas.height - padding * 2;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const maxAge = Math.max(...data.map(d => d.age));
-    const maxWeight = Math.max(...data.map(d => d.weight), slope * maxAge);
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Axes
-    ctx.strokeStyle = "#333";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(padding, padding);
-    ctx.lineTo(padding, canvas.height - padding);
-    ctx.lineTo(canvas.width - padding, canvas.height - padding);
-    ctx.stroke();
-
-    // Labels
-    ctx.fillStyle = "#000";
-    ctx.fillText("Weight ↑", 10, padding);
-    ctx.fillText("Age →", canvas.width - padding - 20, canvas.height - 20);
-
-    // Points
-    ctx.fillStyle = color;
-    data.forEach(c => {
-        const x = padding + (c.age / maxAge) * width;
-        const y = canvas.height - padding - (c.weight / maxWeight) * height;
-
+        // Grid/Axes
+        ctx.strokeStyle = "#ddd";
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fill();
-    });
+        // X and Y lines
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, canvas.height - padding);
+        ctx.lineTo(canvas.width - padding, canvas.height - padding);
+        ctx.stroke();
 
-    // Average line y = m x
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(padding, canvas.height - padding);
-    ctx.lineTo(
-        padding + width,
-        canvas.height - padding - (slope * maxAge / maxWeight) * height
-    );
-    ctx.stroke();
-}
+        // Labels
+        ctx.fillStyle = "#555";
+        ctx.font = "14px Segoe UI";
+        ctx.fillText("Weight (kg)", 10, padding - 15);
+        ctx.fillText("Age (mo)", canvas.width - padding - 30, canvas.height - 15);
 
-drawGraph("cowGraph",   <?= json_encode($cow) ?>,   <?= $cowSlope ?>,   "green");
-drawGraph("goatGraph",  <?= json_encode($goat) ?>,  <?= $goatSlope ?>,  "blue");
-drawGraph("sheepGraph", <?= json_encode($sheep) ?>, <?= $sheepSlope ?>, "orange");
-</script>
+        // Plot Points
+        ctx.fillStyle = color;
+        data.forEach(c => {
+            const x = padding + (c.age / maxAge) * width;
+            const y = canvas.height - padding - (c.weight / maxWeight) * height;
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, Math.PI * 2);
+            ctx.fill();
+        });
 
+        // Plot Trend Line
+        ctx.strokeStyle = "rgba(255, 50, 50, 0.7)";
+        ctx.lineWidth = 2;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(padding, canvas.height - padding);
+        ctx.lineTo(
+            padding + width,
+            canvas.height - padding - (slope * maxAge / maxWeight) * height
+        );
+        ctx.stroke();
+        ctx.setLineDash([]);
+    }
 
+    <?php if(!empty($cow)): ?>
+        drawGraph("cowGraph",   <?= json_encode($cow) ?>,   <?= $cowSlope ?>,   "#009879");
+    <?php endif; ?>
+
+    <?php if(!empty($goat)): ?>
+        drawGraph("goatGraph",  <?= json_encode($goat) ?>,  <?= $goatSlope ?>,  "#2980b9");
+    <?php endif; ?>
+
+    <?php if(!empty($sheep)): ?>
+        drawGraph("sheepGraph", <?= json_encode($sheep) ?>, <?= $sheepSlope ?>, "#e67e22");
+    <?php endif; ?>
+    </script>
 
 </body>
 </html>
