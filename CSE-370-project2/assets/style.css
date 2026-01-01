@@ -271,22 +271,16 @@ button:hover {
 }
 
 .stat-card.highlight .stat-number { color: white; }
-
-
-
-
 /*------------------profile----------------------*/
 .profile-container {
-    position: fixed;
-    top: 70px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin: 140px auto 50px auto;
     width: 600px;
-    margin: 0 auto;
+    max-width: 90%;
     background: white;
     padding: 30px;
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
 }
 
 .profile-header {

@@ -2,17 +2,26 @@
 require_once "db.php";
 session_start();
 
+// Check if user is logged in
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$current_user = $_SESSION['user']; // This is the Farmer/Owner
+
 // 1. Logic for filtering by date
+$where_sql = "WHERE user_name = '$current_user'"; // Default: Get logs for this farm only
 $filter_date = "";
-$where_sql = "";
 
 if (isset($_GET['filter_date']) && !empty($_GET['filter_date'])) {
     $filter_date = mysqli_real_escape_string($conn, $_GET['filter_date']);
-    // Filter by the specific date chosen
-    $where_sql = " WHERE log_date = '$filter_date' ";
+    // Append the date filter to the existing WHERE clause
+    $where_sql .= " AND log_date = '$filter_date' ";
 }
 
 // 2. Fetch logs (Newest first)
+// We select where user_name = Session User, but we display 'who' in the table
 $query = "SELECT * FROM activity_logs $where_sql ORDER BY log_date DESC, log_time DESC";
 $result = mysqli_query($conn, $query);
 ?>
@@ -64,28 +73,32 @@ $result = mysqli_query($conn, $query);
         <h1>Activity Logs</h1>
     </div>
 
-    </div>
     <div class="topbar">
+        <button onclick="profile()"><img src="assets/img/farmer.png"></button>
         <button type="button" onclick="location.href='dashboard.php'" title="Home"><img src="assets/img/barn.png"></button>
         <button onclick="showCattle()"><img src="assets/img/cattle.png"></button>
         <button onclick="showWorker()"><img src="assets/img/worker.png"></button>
         <button onclick="showProduct()"><img src="assets/img/product.png"></button>
         <button onclick="medical_record()"><img src="assets/img/medical.png"></button>
+        <button onclick="showinvent()"><img src="assets/img/market.png"></button>
         <button onclick="showLog()"><img src="assets/img/wood.png"></button>
         <button style='background:red;' onclick="location.href='logout.php'"><img src="assets/img/logout.png"></button>
-    <script>
-    function Dashboard() {window.location.href="dashboard.php"}
-    function addCattle() {window.location.href="add_cattle.php"}
-    function showCattle() {window.location.href="showcattle.php"}
-    function addWorker() {window.location.href="addWorker.php"}
-    function showWorker() {window.location.href="showWorker.php"}
-    function addProduct() {window.location.href="addProduct.php"}
-    function showProduct() {window.location.href="showProduct.php"}
-    function medical_record() {window.location.href="medical_record.php"}
-    function addProduct() {window.location.href="addProduct.php"}
-    function showLog() {window.location.href="report.php"}
-    </script>
     </div>
+
+    <script>
+        function profile() {window.location.href="profile.php"}
+        function Dashboard() {window.location.href="dashboard.php"}
+        function addCattle() {window.location.href="add_cattle.php"}
+        function showCattle() {window.location.href="showcattle.php"}
+        function addWorker() {window.location.href="addWorker.php"}
+        function showWorker() {window.location.href="showWorker.php"}
+        function addProduct() {window.location.href="addProduct.php"}
+        function showProduct() {window.location.href="showProduct.php"}
+        function medical_record() {window.location.href="medical_record.php"}
+        function showLog() {window.location.href="report.php"}
+        function showinvent(){window.location.href="showInventory.php"}
+        function addinvent(){window.location.href="addInventory.php"}
+    </script>
 
     <div class="filter-container">
         <form method="GET" action="report.php">
@@ -105,7 +118,7 @@ $result = mysqli_query($conn, $query);
         <thead>
             <tr>
                 <th>ID</th>
-                <th>User</th>
+                <th>Who (Performer)</th>
                 <th>Action</th>
                 <th>Date</th>
                 <th>Time</th>
@@ -115,19 +128,23 @@ $result = mysqli_query($conn, $query);
             <?php 
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
+                    // Check if the 'who' matches the 'owner'. If so, we can style it differently or just show name.
+                    $performer = htmlspecialchars($row['who']);
+                    
                     echo "<tr>";
                     echo "<td>#" . $row['report_id'] . "</td>";
-                    echo "<td><strong>" . htmlspecialchars($row['who']) . "</strong></td>";
+                    echo "<td style='color: #009879; font-weight:bold;'>" . $performer . "</td>";
                     echo "<td>" . htmlspecialchars($row['did_what']) . "</td>";
                     echo "<td>" . $row['log_date'] . "</td>";
                     echo "<td>" . $row['log_time'] . "</td>";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='5' style='text-align:center;'>No activities found for this date.</td></tr>";
+                echo "<tr><td colspan='5' style='text-align:center;'>No activities found.</td></tr>";
             }
             ?>
         </tbody>
     </table>
+
 </body>
 </html>

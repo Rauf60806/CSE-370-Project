@@ -64,14 +64,17 @@ $recent_logs = mysqli_query($conn, $sql_logs);
         <h1>User: <?php echo $_SESSION["user"]; ?></h1>
 </div>
 <div class="topbar">
+        <button onclick="profile()"><img src="assets/img/farmer.png"></button>
         <button type="button" onclick="location.href='dashboard.php'" title="Home"><img src="assets/img/barn.png"></button>
         <button onclick="showCattle()"><img src="assets/img/cattle.png"></button>
         <button onclick="showWorker()"><img src="assets/img/worker.png"></button>
         <button onclick="showProduct()"><img src="assets/img/product.png"></button>
         <button onclick="medical_record()"><img src="assets/img/medical.png"></button>
+        <button onclick="showinvent()"><img src="assets/img/market.png"></button>
         <button onclick="showLog()"><img src="assets/img/wood.png"></button>
         <button style='background:red;' onclick="location.href='logout.php'"><img src="assets/img/logout.png"></button>
     <script>
+    function profile() {window.location.href="profile.php"}
     function Dashboard() {window.location.href="dashboard.php"}
     function addCattle() {window.location.href="add_cattle.php"}
     function showCattle() {window.location.href="showcattle.php"}
@@ -82,6 +85,8 @@ $recent_logs = mysqli_query($conn, $sql_logs);
     function medical_record() {window.location.href="medical_record.php"}
     function addProduct() {window.location.href="addProduct.php"}
     function showLog() {window.location.href="report.php"}
+    function showinvent(){window.location.href="showInventory.php"}
+    function addinvent(){window.location.href="addInventory.php"}
     </script>
 </div>
 <div class="main-content">
