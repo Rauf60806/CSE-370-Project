@@ -345,7 +345,8 @@ button:hover {
 
 /* Container that clears the fixed sidebar and notch */
 .main-content {
-    margin-left: 110px; /* Moves content away from your 70px sidebar */
+    margin-left: 15%; /* Moves content away from your 70px sidebar */
+    margin-right: 15%;
     margin-top: 120px;  /* Moves content below the header notch */
     padding: 20px;
 }

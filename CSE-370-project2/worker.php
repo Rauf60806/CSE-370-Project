@@ -69,10 +69,10 @@ $recent_logs = mysqli_query($conn, $sql_logs);
         </script>
     </div>
 
-    <div class="main-content">
+    <div class="main-content" >
         
         <div class="stats-grid">
-            <div class="stat-card highlight">
+            <div class="stat-card highlight" >
                 <h3>Total Livestock</h3>
                 <p class="stat-number"><?php echo $total_cattle; ?></p>
                 <div class="breakdown">
@@ -84,7 +84,7 @@ $recent_logs = mysqli_query($conn, $sql_logs);
         </div>
 
             
-            <table class="table" style="width: 100%; border-collapse: collapse;">
+            <table class="table" style="border-collapse: collapse;">
                 <thead>
                     <tr style="text-align: center; ;">
                         <th colspan="3"><h2 style="color:white">My Recent Activity Log</h2></th>
