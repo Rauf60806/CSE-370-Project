@@ -102,6 +102,7 @@ list($sheepSlope, $sheepOutliers) = analyzeCattle($sheep);
     <div class="topbar">
         <button onclick="profile()"><img src="assets/img/worker.png"></button>
         <button type="button" onclick="location.href='worker.php'" title="Home"><img src="assets/img/barn.png"></button>
+        <button onclick="updateCattle()"><img src="assets/img/medical2.png"></button>
         <button onclick="addProduct()"><img src="assets/img/product.png"></button>
         <button onclick="medical_record()"><img src="assets/img/medical.png"></button>
         <button onclick="addLog()"><img src="assets/img/wood.png"></button>
@@ -110,6 +111,7 @@ list($sheepSlope, $sheepOutliers) = analyzeCattle($sheep);
     function profile() {window.location.href="workerProfile.php"}
     function Dashboard() {window.location.href="worker.php"}
     function addProduct() {window.location.href="addProductW.php"}
+    function updateCattle() {window.location.href="updateCattleInfo.php"}
     function medical_record() {window.location.href="medical_recordW.php"}
     function addLog() {window.location.href="addLog.php"}
     </script>

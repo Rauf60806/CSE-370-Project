@@ -43,8 +43,7 @@ $recent_logs = mysqli_query($conn, $sql_logs);
 </head>
 <body class="farm-bg">
     <div class="header-notch">
-        <h1>🐄 Farmer Dashboard 🐐</h1>
-        <h1>User: <?php echo $_SESSION["user"]; ?></h1>
+        <h1>🧑🏻‍🌾 Farmer Dashboard 🐐</h1>
 </div>
 <div class="topbar">
         <button onclick="profile()"><img src="assets/img/farmer.png"></button>
