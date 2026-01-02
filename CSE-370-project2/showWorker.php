@@ -91,12 +91,13 @@ $result = mysqli_query($conn, $sql);
                        style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 250px;">
                 
                 <button type="submit" class="btn-apply">Search</button>
-                <button class="btn-add" onclick="window.location.href='addWorker.php'">+ Register Worker</button>
+                
 
                 <?php if(!empty($search_term)): ?>
                     <a href="showWorker.php" class="link-clear">Clear Search</a>
                 <?php endif; ?>
             </form>
+            <button class="btn-add" onclick="window.location.href='addWorker.php'">+ Register Worker</button>
         </div>
 
         <table class="table">
