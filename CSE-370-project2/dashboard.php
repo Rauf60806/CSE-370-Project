@@ -6,48 +6,31 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-
 $current_user = mysqli_real_escape_string($conn, $_SESSION['user']);
-
-// --- CATTLE COUNTS (Using Bridge Table) ---
-
-// 1. Total Cattle
 $sql_cattle_count = "SELECT COUNT(*) as total FROM cattle 
                      INNER JOIN owns_cattle ON cattle.cattle_id = owns_cattle.cattle_id 
                      WHERE owns_cattle.user_name = '$current_user'";
 $total_cattle = mysqli_fetch_assoc(mysqli_query($conn, $sql_cattle_count))['total'];
-
-// 2. Cows
 $sql_cow_count = "SELECT COUNT(*) as total FROM cattle 
                   INNER JOIN owns_cattle ON cattle.cattle_id = owns_cattle.cattle_id 
                   WHERE owns_cattle.user_name = '$current_user' AND cattle.cattle_type = 'Cow'";
 $cow_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_cow_count))['total'];
-
-// 3. Goats
 $sql_goat_count = "SELECT COUNT(*) as total FROM cattle 
                    INNER JOIN owns_cattle ON cattle.cattle_id = owns_cattle.cattle_id 
                    WHERE owns_cattle.user_name = '$current_user' AND cattle.cattle_type = 'Goat'";
 $goat_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_goat_count))['total'];
-
-// 4. Sheep
 $sql_sheep_count = "SELECT COUNT(*) as total FROM cattle 
                     INNER JOIN owns_cattle ON cattle.cattle_id = owns_cattle.cattle_id 
                     WHERE owns_cattle.user_name = '$current_user' AND cattle.cattle_type = 'Sheep'";
 $sheep_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_sheep_count))['total'];
 
 
-// --- STAFF & INVENTORY COUNTS ---
-
-// 5. Workers (Assuming 'added_by' or 'user_name' column in worker table)
 $sql_worker_count = "SELECT COUNT(*) as total FROM worker c join owns_worker w on c.worker_id = w.worker_id WHERE user_name = '$current_user'";
 $worker_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_worker_count))['total'];
 
-// 6. Products (Assuming 'user_name' column in product table)
 $sql_product_count = "SELECT COUNT(*) as total FROM product c join owns_product p on c.product_id = p.product_id WHERE user_name = '$current_user'";
 $product_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_product_count))['total'];
 
-
-// --- RECENT LOGS ---
 $sql_logs = "SELECT * FROM activity_logs WHERE who = '$current_user' ORDER BY report_id DESC LIMIT 5";
 $recent_logs = mysqli_query($conn, $sql_logs);
 ?>

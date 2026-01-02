@@ -67,6 +67,122 @@ button:hover {
     margin: 15px 0;
 }
 /*Table------------------------------------------------*/
+/* ... (Keep all your existing CSS above this line) ... */
+
+/* =========================================
+   MANAGEMENT CARD & FILTERS (Reusable)
+   ========================================= */
+
+/* The main container for data tables (replaces raw tables) */
+.management-card {
+    background: white;
+    
+    /* 1. Set Width to 70% as requested */
+    width: 70%;
+    
+    /* 2. Remove max-width so it strictly follows the 70% rule (or keep it large) */
+    max-width: 100%; 
+
+    /* 3. Centering Logic */
+    /* Top: 140px (clears header), Right: auto, Bottom: 50px, Left: auto */
+    margin: 140px auto 50px auto; 
+
+    border-radius: 20px;
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* Header section containing Title, Add Button, and Filters */
+.card-header {
+    padding: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Row for Dropdowns and Buttons */
+.filter-row {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+.filter-row select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-family: 'Segoe UI', sans-serif;
+    outline: none;
+}
+
+/* The "+ Add New" Button */
+.btn-add {
+    background: #009879;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: auto; /* Pushes button to the far right */
+    text-decoration: none; /* In case it's an <a> tag */
+    font-size: 0.9em;
+}
+
+.btn-add:hover {
+    background: #007d63;
+}
+
+/* Red "Sell" or "Delete" button */
+.btn-danger {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.btn-danger:hover {
+    background: #cc0000;
+}
+
+/* Apply Filter Button */
+.btn-apply {
+    background: #333; 
+    color: white; 
+    border: none; 
+    padding: 8px 15px; 
+    border-radius: 8px; 
+    cursor: pointer;
+}
+
+.btn-apply:hover {
+    background: #555;
+}
+
+/* Clear Filter Link */
+.link-clear {
+    color: #666; 
+    font-size: 0.9em; 
+    text-decoration: none;
+}
+
+.link-clear:hover {
+    text-decoration: underline;
+}
+
+/* OVERRIDES: When .table is inside .management-card */
+.management-card .table {
+    margin: 0 !important; /* Removes the 100px margin from the original .table */
+    width: 100%;
+    border-radius: 0;     /* Let the card handle the corners */
+    box-shadow: none;     /* Remove double shadow */
+    border: none;
+}
 .table {
     /* 1. Necessary for rounded corners */
     border-collapse: separate; 
