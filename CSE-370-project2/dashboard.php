@@ -36,7 +36,20 @@ $result_profit = mysqli_query($conn, $sql_profit);
 $row_profit = mysqli_fetch_assoc($result_profit);
 $current_profit = isset($row_profit['profit']) ? $row_profit['profit'] : 0;
 ?>
-       <button type="button" onclick="location.href='dashboard.php'" title="Home"><img src="assets/img/barn.png"></button>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cattle Management</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="farm-bg">
+    <div class="header-notch">
+        <h1>🧑🏻‍🌾 Farmer Dashboard 🐐</h1>
+</div>
+<div class="topbar">
+        <button onclick="profile()"><img src="assets/img/farmer.png"></button>
+        <button type="button" onclick="location.href='dashboard.php'" title="Home"><img src="assets/img/barn.png"></button>
         <button onclick="showCattle()"><img src="assets/img/cattle.png"></button>
         <button onclick="showWorker()"><img src="assets/img/worker.png"></button>
         <button onclick="showProduct()"><img src="assets/img/product.png"></button>
@@ -94,17 +107,3 @@ $current_profit = isset($row_profit['profit']) ? $row_profit['profit'] : 0;
 </div>
 </body>
 </html>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Cattle Management</title>
-    <link rel="stylesheet" href="assets/style.css">
-</head>
-<body class="farm-bg">
-    <div class="header-notch">
-        <h1>🧑🏻‍🌾 Farmer Dashboard 🐐</h1>
-</div>
-<div class="topbar">
-        <button onclick="profile()"><img src="assets/img/farmer.png"></button>
- 
