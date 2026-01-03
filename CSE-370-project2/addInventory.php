@@ -58,12 +58,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $user_name      = mysqli_real_escape_string($conn, $_SESSION['user']);
     $inventory_type = mysqli_real_escape_string($conn, $_POST["inventory_type"]);
-    $amount         = (int) $_POST["amount"];
     $purchase_date  = mysqli_real_escape_string($conn, $_POST["purchase_date"]);
     $price          = (float) $_POST["price"];
     $sql_inventory = "
-        INSERT INTO inventory (user_name, inventory_type, amount, purchase_date, price)
-        VALUES ('$user_name', '$inventory_type', $amount, '$purchase_date', $price)
+        INSERT INTO inventory (user_name, inventory_type, purchase_date, price)
+        VALUES ('$user_name', '$inventory_type', '$purchase_date', $price)
     ";
 
     if (mysqli_query($conn, $sql_inventory)) {
@@ -104,12 +103,6 @@ if (isset($_GET['success'])) {
             <option value="Fence">Fence</option>
             <option value="Safety equipment set">Safety equipment set</option>
         </select>
-    </div>
-
-    <!-- Amount input -->
-    <div style="margin-bottom: 20px;">
-        <label style="font-weight: bold;">Amount (kg)</label><br>
-        <input type="number" name="amount" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
 
     <div style="margin-bottom: 20px;">

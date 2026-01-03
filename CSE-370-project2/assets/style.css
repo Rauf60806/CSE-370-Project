@@ -85,7 +85,7 @@ button:hover {
 
     /* 3. Centering Logic */
     /* Top: 140px (clears header), Right: auto, Bottom: 50px, Left: auto */
-    margin: 140px auto 50px auto; 
+    margin: 70px auto 50px auto; 
 
     border-radius: 20px;
     overflow: hidden; 
@@ -390,7 +390,7 @@ button:hover {
 .stat-card.highlight .stat-number { color: white; }
 /*------------------profile----------------------*/
 .profile-container {
-    margin: 140px auto 50px auto;
+    margin: 70px auto 50px auto;
     width: 600px;
     max-width: 90%;
     background: white;

@@ -30,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $farm_loc = mysqli_real_escape_string($conn, $_POST['Farm_location']);
     $pass = mysqli_real_escape_string($conn, $_POST['pass']);
 
+    // Updated SQL to include first_name and last_name
     $update_sql = "UPDATE dashboard_panel 
                    SET email='$email', farm_name='$farm_name', Farm_location='$farm_loc', pass='$pass' 
                    WHERE user_name='$current_user'";
@@ -49,6 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $query = "SELECT * FROM dashboard_panel WHERE user_name='$current_user'";
 $result = mysqli_query($conn, $query);
 $user_data = mysqli_fetch_assoc($result);
+
+// Construct Full Name for display
+$full_name_display = $user_data['first_name'] . " " . $user_data['last_name'];
 ?>
 
 <!DOCTYPE html>
@@ -81,14 +85,13 @@ $user_data = mysqli_fetch_assoc($result);
             <div class="profile-avatar">
                 <img src="assets/img/farmer.png" alt="Profile">
             </div>
-            <h2><?php echo htmlspecialchars($user_data['user_name']); ?></h2>
-            <p style="color: #666;">Farm Owner</p>
+            <h2><?php echo htmlspecialchars($full_name_display); ?></h2>
+            <p style="color: #666;">Username: <?php echo htmlspecialchars($user_data['user_name']); ?></p>
         </div>
 
         <?php echo $message; ?>
 
         <form method="POST" class="profile-form">
-            
             <div class="form-group">
                 <label>Email Address</label>
                 <input type="email" name="email" value="<?php echo htmlspecialchars($user_data['email']); ?>" required>

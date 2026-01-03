@@ -1,78 +1,72 @@
 <?php
-require_once "db.php";
-session_start();
+    require_once "db.php";
+    session_start();
 
-// Check login
-if (!isset($_SESSION['user'])) {
-    header("Location: index.php"); // Redirect if not logged in
-    exit();
-}
-
-$current_user = mysqli_real_escape_string($conn, $_SESSION['user']);
-$current_worker = isset($_SESSION['worker']) ? mysqli_real_escape_string($conn, $_SESSION['worker']) : $current_user;
-
-// --- Helper Function for Logs ---
-function addLog($conn, $owner, $worker, $action) {
-    $date = date("Y-m-d");
-    $time = date("H:i:s");
-    $owner  = mysqli_real_escape_string($conn, $owner);
-    $worker = mysqli_real_escape_string($conn, $worker); 
-    $action = mysqli_real_escape_string($conn, $action);
-    
-    $sql = "INSERT INTO activity_logs (user_name, who, did_what, log_date, log_time) 
-            VALUES ('$owner', '$worker', '$action', '$date', '$time')";
-    mysqli_query($conn, $sql);
-}
-
-// --- 1. HANDLE SELL LOGIC ---
-if (isset($_POST['sell_cattle_id'])) {
-    $cattle_id = (int) $_POST['sell_cattle_id'];
-    
-    // 1. Verify ownership before deleting
-    $check_sql = "SELECT * FROM owns_cattle WHERE cattle_id = $cattle_id AND user_name = '$current_user'";
-    $check_res = mysqli_query($conn, $check_sql);
-
-    if (mysqli_num_rows($check_res) > 0) {
-        // 2. Log the action
-        $log_message = "Sold Cattle ID: #$cattle_id";
-        addLog($conn, $current_user, $current_worker, $log_message);
-
-        // 3. Delete from linking table
-        $sql_delete_link = "DELETE FROM owns_cattle WHERE cattle_id = $cattle_id AND user_name = '$current_user'";
-        mysqli_query($conn, $sql_delete_link);
-
-        // 4. Delete from main cattle table
-        $sql_delete_cattle = "DELETE FROM cattle WHERE cattle_id = $cattle_id";
-        mysqli_query($conn, $sql_delete_cattle);
+    if (!isset($_SESSION['user'])) {
+        header("Location: index.php"); 
+        exit();
     }
-}
+    $current_user = mysqli_real_escape_string($conn, $_SESSION['user']);
+    $current_worker = isset($_SESSION['worker']) ? mysqli_real_escape_string($conn, $_SESSION['worker']) : $current_user;
 
-// --- 2. HANDLE FILTERS & FETCH DATA ---
-$type_filter = $_GET['type'] ?? '';
-$gender_filter = $_GET['gender'] ?? '';
+    function addLog($conn, $owner, $worker, $action) {
+        $date = date("Y-m-d");
+        $time = date("H:i:s");
+        $owner  = mysqli_real_escape_string($conn, $owner);
+        $worker = mysqli_real_escape_string($conn, $worker); 
+        $action = mysqli_real_escape_string($conn, $action);
 
-// Start Query
-$sql = "SELECT c.* FROM cattle c 
-        JOIN owns_cattle o ON c.cattle_id = o.cattle_id 
-        WHERE o.user_name = '$current_user'";
+        $sql = "INSERT INTO activity_logs (user_name, who, did_what, log_date, log_time) 
+                VALUES ('$owner', '$worker', '$action', '$date', '$time')";
+        mysqli_query($conn, $sql);
+    }
 
-// Apply Filters
-if (!empty($type_filter)) {
-    $sql .= " AND c.cattle_type = '" . mysqli_real_escape_string($conn, $type_filter) . "'";
-}
-if (!empty($gender_filter)) {
-    $sql .= " AND c.gender = '" . mysqli_real_escape_string($conn, $gender_filter) . "'";
-}
+    if (isset($_POST['sell_cattle_id']) && isset($_POST['sell_price'])) {
+        $cattle_id = (int) $_POST['sell_cattle_id'];
+        $sale_price = (float) $_POST['sell_price'];
+        $check_sql = "SELECT * FROM owns_cattle WHERE cattle_id = $cattle_id AND user_name = '$current_user'";
+        $check_res = mysqli_query($conn, $check_sql);
 
-$result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($check_res) > 0) {
+
+            $sql_profit = "UPDATE dashboard_panel SET profit = profit + $sale_price WHERE user_name = '$current_user'";
+            mysqli_query($conn, $sql_profit);
+
+            $log_message = "Sold Cattle ID: #$cattle_id";
+            addLog($conn, $current_user, $current_worker, $log_message);
+
+            $sql_delete_link = "DELETE FROM owns_cattle WHERE cattle_id = $cattle_id AND user_name = '$current_user'";
+            mysqli_query($conn, $sql_delete_link);
+
+            $sql_delete_cattle = "DELETE FROM cattle WHERE cattle_id = $cattle_id";
+            mysqli_query($conn, $sql_delete_cattle);
+        }
+    }
+    $type_filter = $_GET['type'] ?? '';
+    $gender_filter = $_GET['gender'] ?? '';
+
+    // Start Query
+    $sql = "SELECT c.* FROM cattle c 
+            JOIN owns_cattle o ON c.cattle_id = o.cattle_id 
+            WHERE o.user_name = '$current_user'";
+
+    // Apply Filters
+    if (!empty($type_filter)) {
+        $sql .= " AND c.cattle_type = '" . mysqli_real_escape_string($conn, $type_filter) . "'";
+    }
+    if (!empty($gender_filter)) {
+        $sql .= " AND c.gender = '" . mysqli_real_escape_string($conn, $gender_filter) . "'";
+    }
+
+    $result = mysqli_query($conn, $sql);
 ?>
 
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Cattle Management</title>
-    <link rel="stylesheet" href="assets/style.css">
-</head>
+    <head>
+        <title>Cattle Management</title>
+        <link rel="stylesheet" href="assets/style.css">
+    </head>
 <body class="farm-bg">
 
     <div class="header-notch">
@@ -129,6 +123,7 @@ $result = mysqli_query($conn, $sql);
                     <th>Age</th>
                     <th>Gender</th>
                     <th>Weight</th>
+                    <th>Price</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -142,9 +137,11 @@ $result = mysqli_query($conn, $sql);
                         echo "<td>{$row['age']} Yrs</td>";
                         echo "<td>{$row['gender']}</td>";
                         echo "<td>{$row['weight']} kg</td>";
+                        echo "<td>{$row['price']} Taka</td>";
                         echo "<td>
                                 <form method='post' onsubmit=\"return confirm('Are you sure you want to sell Cattle #{$row['cattle_id']}?');\" style='margin:0;'>
                                     <input type='hidden' name='sell_cattle_id' value='{$row['cattle_id']}'>
+                                    <input type='hidden' name='sell_price' value='{$row['price']}'>
                                     <button type='submit' class='btn-danger'>Sell</button>
                                 </form>
                               </td>";

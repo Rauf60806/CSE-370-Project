@@ -31,8 +31,10 @@ $worker_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_worker_count))['tota
 $sql_product_count = "SELECT COUNT(*) as total FROM product c join owns_product p on c.product_id = p.product_id WHERE user_name = '$current_user'";
 $product_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_product_count))['total'];
 
-$sql_logs = "SELECT * FROM activity_logs WHERE who = '$current_user' ORDER BY report_id DESC LIMIT 5";
-$recent_logs = mysqli_query($conn, $sql_logs);
+$sql_profit = "SELECT profit FROM dashboard_panel WHERE user_name = '$current_user'";
+$result_profit = mysqli_query($conn, $sql_profit);
+$row_profit = mysqli_fetch_assoc($result_profit);
+$current_profit = isset($row_profit['profit']) ? $row_profit['profit'] : 0;
 ?>
 
 <!DOCTYPE html>
@@ -73,6 +75,15 @@ $recent_logs = mysqli_query($conn, $sql_logs);
 </div>
 <div class="main-content">
     <div class="stats-grid">
+        <div class="stat-card" style="border-left: 5px solid <?php echo $profit_color; ?>;">
+            <h3>Net Profit</h3>
+            <p class="stat-number" style="color: <?php echo $profit_color; ?>;">
+                <?php echo number_format($current_profit, 2); ?>
+            </p>
+            <div class="breakdown">
+                <span>Total Earnings</span>
+            </div>
+        </div>
         <div class="stat-card highlight">
             <h3>Total Livestock</h3>
             <p class="stat-number"><?php echo $total_cattle; ?></p>

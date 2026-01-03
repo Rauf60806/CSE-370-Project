@@ -59,8 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $age         = $_POST["age"];
     $gender      = $_POST["gender"];
     $weight      = $_POST["weight"];
-    $sql_cattle = "INSERT INTO cattle ( age, gender, weight,cattle_type)
-            VALUES ( '$age', '$gender', '$weight','$cattle_type')";
+    $price       = $_POST["price"];
+    $user_name   = $_SESSION['user'];
+    $sql_cattle = "INSERT INTO cattle (price,age, gender, weight,cattle_type)
+            VALUES ('$price ', '$age', '$gender', '$weight','$cattle_type')";
     if (mysqli_query($conn, $sql_cattle)) {
         $cattle_id = $conn->insert_id;
         $sql_owncattle = "INSERT INTO owns_cattle (user_name, cattle_id) VALUES ('"
@@ -69,6 +71,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     } 
     if (mysqli_query($conn, $sql_owncattle)) {
+
+        $sql_profit = "UPDATE dashboard_panel SET profit = profit - $price WHERE user_name = '$user_name'";
+        mysqli_query($conn, $sql_profit);
 
             // --- AUTOMATIC LOG START ---
         $log_message = "Added a new $cattle_type (Weight: $weight kg, Gender: $gender)";
@@ -120,9 +125,11 @@ if (isset($_GET['success'])) {
         <label style="font-weight: bold;">Weight (kg)</label><br>
         <input type="number" name="weight" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-
-    <!-- Submit button -->
-    <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
+    <div style="margin-bottom: 20px;">
+        <label style="font-weight: bold;">Purchase Price</label><br>
+        <input type="number" step="0.01" name="price" required style="width: 400px; padding: 8px;" placeholder="Cost of cattle">
+    </div>
+    <button type="submit">
         Add Cattle
     </button>    
     <button onclick="window.location.href='showcattle.php'">

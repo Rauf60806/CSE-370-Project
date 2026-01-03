@@ -20,9 +20,9 @@ if (isset($_POST['delete_inventory_id'])) {
 
     $sql_delete = "DELETE FROM inventory WHERE purchase_id = $inventory_id";
     if (mysqli_query($conn, $sql_delete)) {      
-        $log_message = "Deleted Inventory ID $inventory_id";
+        $log_message = "Used item $inventory_id";
         addLog($conn, $_SESSION['user'], $current_worker, $log_message);
-        $message = "<p style='color:green; padding:10px;'>Inventory Item Deleted Successfully</p>";
+        $message = "<p style='color:green; padding:10px;'>Inventory Item has been Used</p>";
     } else {
         $message = "<p style='color:red; padding:10px;'>Error deleting: " . mysqli_error($conn) . "</p>";
     }
@@ -60,7 +60,6 @@ $result = mysqli_query($conn, $sql);
     <div class="management-card">
         <div class="card-header">
             <div class="card-header-top">
-                <h2>Supplies & Equipment</h2>
                 <button class="btn-add" onclick="window.location.href='addInventory.php'">+ Add Inventory</button>
             </div>
             <?php echo $message; ?>
@@ -71,7 +70,6 @@ $result = mysqli_query($conn, $sql);
                 <tr>
                     <th>ID</th>
                     <th>Type</th>
-                    <th>Amount</th>
                     <th>Purchase Date</th>
                     <th>Price</th>
                     <th>Action</th>
@@ -84,7 +82,6 @@ $result = mysqli_query($conn, $sql);
                         echo "<tr>
                             <td>#{$row['purchase_id']}</td>
                             <td>{$row['inventory_type']}</td>
-                            <td>{$row['amount']}</td>
                             <td>{$row['purchase_date']}</td>
                             <td>{$row['price']}</td>
                             <td>

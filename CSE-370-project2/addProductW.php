@@ -27,11 +27,12 @@
         <h1>Add Product</h1>
     </div>
 <div class = "panel" style="max-width: 430px; margin: 100px auto;">
+
+
 <?php
-// Include database connection
 require_once "db.php";
 session_start();
-/*----------------------log function----------------------*/
+
 function addLog($conn, $owner, $worker, $action) {
     $date = date("Y-m-d");
     $time = date("H:i:s");
@@ -40,80 +41,72 @@ function addLog($conn, $owner, $worker, $action) {
     $action = mysqli_real_escape_string($conn, $action);
     $sql = "INSERT INTO activity_logs (user_name, who, did_what, log_date, log_time) 
             VALUES ('$owner', '$worker', '$action', '$date', '$time')";
-            
-    if (!mysqli_query($conn, $sql)) {
-    }
+    mysqli_query($conn, $sql);
 }
-/*----------------------log function----------------------*/
 
+$user = $_SESSION['user'];
+
+// --- HANDLE FORM SUBMISSION ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $product_id = (int)$_POST["product_id"];
+    $quantity   = (int)$_POST["quantity"];
+    $p_date     = date("Y-m-d"); // Current Date automatically
 
-    // Read form values safely
-    $farmer_id = $_SESSION["registration_id"];
-    $category = $_POST["Category"];
-    $production_date = $_POST["production_date"];
-    $price     = $_POST["price"];
-    $quantity     = $_POST["quantity"];
+    // Insert into production_date table (The Stock Batch)
+    $sql_stock = "INSERT INTO production_date (product_id, production_date, quantity) 
+                  VALUES ('$product_id', '$p_date', '$quantity')";
 
-    // SQL query to insert cattle data
-    // NOTE: cattle_id is now auto-increment, so we don't include it
-    $sql = "INSERT INTO  product (category,production_date,price,quantity)
-            VALUES ('$category', '$production_date', '$price','$quantity')";
-    if (mysqli_query($conn, $sql)) {
-        $product_id = $conn->insert_id;
-        $sql_ownproduct = "INSERT INTO owns_product (user_name, product_id) VALUES ('"
-    . mysqli_real_escape_string($conn, $_SESSION['user']) . "', "
-    . (int)$product_id . ")";
-    }
-    // Execute query
-    if (mysqli_query($conn, $sql_ownproduct)) {
-            // --- AUTOMATIC LOG START ---
-            $log_message = "Added a new $catagory (Quantity: $quantity (kg or L), Price: $price)";
-            addLog($conn, $_SESSION['user'], $_SESSION['worker'], $log_message);
-            // --- AUTOMATIC LOG END ---
+    if (mysqli_query($conn, $sql_stock)) {
+        
+        // Log the action (Fetching name for log)
+        $res = mysqli_query($conn, "SELECT category FROM product WHERE product_id=$product_id");
+        $cat = mysqli_fetch_assoc($res)['category'];
+        
+        $log_message = "Added Stock: $cat (Qty: $quantity, Date: $p_date)";
+        addLog($conn, $_SESSION['user'], $_SESSION['worker'] ?? $_SESSION['user'], $log_message);
+
         header("Location: addProductW.php?success=1");
         exit;
-    } 
-    else {
-        echo "<p style='color:red;'>Error adding cattle: " . mysqli_error($conn) . "</p>";
+    } else {
+        echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
     }
 }
 
-// Show success message if redirected after insert
+$sql_dropdown = "SELECT p.product_id, p.category, p.price 
+                 FROM product p 
+                 JOIN owns_product op ON p.product_id = op.product_id 
+                 WHERE op.user_name = '$user'";
+$result_dropdown = mysqli_query($conn, $sql_dropdown);
 if (isset($_GET['success'])) {
-    echo "<h2>Product added successfully</h2>";
-}
+    echo "<h2>New Stock added</h2>";}
 ?>
 
 <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">
 
     <div style="margin-bottom: 15px;">
-        <label style="font-weight: bold;">Product Type</label><br>
-        <select name="Category" required style="width: 417px; padding: 8px; border-radius: 5px;">
-            <option value="">Select type</option>
-            <option value="Milk">Milk</option>
-            <option value="Meat">Meat</option>
-            <option value="Wool">Wool</option>
-        </select>
+        <label>Select Item to Stock</label><br>
+            <select name="product_id" required style="width: 417px; padding: 8px;">
+                <option value="">-- Choose Product --</option>
+                <?php
+                if (mysqli_num_rows($result_dropdown) > 0) {
+                    while($row = mysqli_fetch_assoc($result_dropdown)) {
+                        echo "<option value='{$row['product_id']}'>{$row['category']} (\${$row['price']})</option>";
+                    }
+                }
+                ?>
+            </select>
     </div>
-
-    <div style="margin-bottom: 15px;">
-        <label style="font-weight: bold;">Date</label><br>
-        <input type="date" name="production_date" required style="width: 400px; padding: 8px; border-radius: 5px;">
-    </div>
-
-    <div style="margin-bottom: 15px;">
-        <label style="font-weight: bold;">Price</label><br>
-        <input type="number" name="price" required style="width: 400px; padding: 8px; border-radius: 5px;">
-    </div>
-
     <div style="margin-bottom: 20px;">
-        <label style="font-weight: bold;">Add Quantity</label><br>
-        <input type="number" name="quantity" required style="width: 400px; padding: 8px; border-radius: 5px;">
+        <label>Quantity to Add</label><br>
+        <input type="number" name="quantity" required style="width: 400px; padding: 8px;" min="1">
     </div>
-
-    <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
-        Add Product
+    <div style="margin-bottom: 15px;">
+        <label>Production Date</label><br>
+        <input type="text" value="<?php echo date('Y-m-d'); ?>" disabled style="width: 400px; padding: 8px; background:#ddd;">
+        <small><i>(Automatically set to today)</i></small>
+    </div>
+    <button type="submit" style="padding: 10px 20px; color: white; border: none; cursor: pointer;">
+        Add Stock
     </button>
 
 </form>
