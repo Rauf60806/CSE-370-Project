@@ -132,7 +132,7 @@ $result = mysqli_query($conn, $sql);
                             $expiry_date = date('Y-m-d', strtotime($pDate . ' + 7 days'));
                             $expiry_display = $expiry_date;
                         } elseif ($cat == 'Meat') {
-                            $expiry_date = date('Y-m-d', strtotime($pDate . ' + 10 days'));
+                            $expiry_date = date('Y-m-d', strtotime($pDate . ' + 30 days'));
                             $expiry_display = $expiry_date;
                         }
                         
@@ -149,7 +149,6 @@ $result = mysqli_query($conn, $sql);
                             <td>{$row['quantity']}</td> <td>
                                 <form method='post' style='display:flex; gap:5px; align-items:center;' onsubmit=\"return confirm('Confirm Sale?');\">
                                     <input type='hidden' name='sell_product_id' value='{$row['product_id']}'>
-                                    
                                     <input type='number' name='sell_qty' 
                                            min='1' max='{$row['quantity']}' 
                                            value='{$row['quantity']}' 
