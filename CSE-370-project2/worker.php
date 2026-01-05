@@ -2,16 +2,13 @@
 require_once "db.php";
 session_start();
 
-// 1. Security Check: Ensure it is a Worker
 if (!isset($_SESSION['worker'])) {
     header("Location: login.php");
     exit();
 }
 
-$worker_id = $_SESSION['worker'];     // The Worker's ID (e.g., 501)
-$current_user = $_SESSION['user'];    // The Owner's Name (e.g., "Ahnaf")
-
-// 2. Fetch Cattle Counts (Belonging to Owner)
+$worker_id = $_SESSION['worker'];  
+$current_user = $_SESSION['user']; 
 $sql_cattle_count = "SELECT COUNT(*) as total FROM cattle 
                      INNER JOIN owns_cattle ON cattle.cattle_id = owns_cattle.cattle_id 
                      WHERE owns_cattle.user_name = '$current_user'";
@@ -32,9 +29,6 @@ $sql_sheep_count = "SELECT COUNT(*) as total FROM cattle
                     WHERE owns_cattle.user_name = '$current_user' AND cattle.cattle_type = 'Sheep'";
 $sheep_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_sheep_count))['total'];
 
-
-// 3. Fetch Worker Logs (FIXED)
-// We check where 'who' matches the $worker_id
 $sql_logs = "SELECT * FROM activity_logs WHERE who = '$worker_id' ORDER BY report_id DESC LIMIT 10";
 $recent_logs = mysqli_query($conn, $sql_logs);
 ?>
@@ -68,9 +62,7 @@ $recent_logs = mysqli_query($conn, $sql_logs);
             function addLog() {window.location.href="addLog.php"}
         </script>
     </div>
-
     <div class="main-content" >
-        
         <div class="stats-grid">
             <div class="stat-card highlight" >
                 <h3>Total Livestock</h3>
@@ -82,8 +74,6 @@ $recent_logs = mysqli_query($conn, $sql_logs);
                 </div>
             </div>
         </div>
-
-            
             <table class="table" style="border-collapse: collapse;">
                 <thead>
                     <tr style="text-align: center; ;">

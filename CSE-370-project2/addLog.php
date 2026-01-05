@@ -86,7 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
 
                 <button type="submit" style="width: 100%; padding: 12px; background-color: #009879; color: white; font-weight: bold; font-size: 1rem; border-radius: 8px;">Submit Log</button>
-                
                 <div style="margin-top: 15px; text-align: center;">
                     <a href="worker.php" style="color: #666; text-decoration: none;">Back to Dashboard</a>
                 </div>

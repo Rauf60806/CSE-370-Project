@@ -41,31 +41,22 @@ if (isset($_POST['sell_product_id'])) {
             echo "<script>alert('Error: Not enough stock!');</script>";
         } else {
             $income = $sell_qty * $price;
-
-            // 2. Add to Profit
             $sql_profit = "UPDATE dashboard_panel SET profit = profit + $income WHERE user_name = '$current_user'";
             mysqli_query($conn, $sql_profit);
-
-            // 3. Update Inventory
             if ($sell_qty == $current_qty) {
-                // Sold All -> Delete rows
                 mysqli_query($conn, "DELETE FROM owns_product WHERE product_id = $product_id");
                 mysqli_query($conn, "DELETE FROM production_date WHERE product_id = $product_id");
                 mysqli_query($conn, "DELETE FROM product WHERE product_id = $product_id");
             } else {
-                // Sold Partial -> Update Quantity in production_date table
                 $new_qty = $current_qty - $sell_qty;
                 mysqli_query($conn, "UPDATE production_date SET quantity = $new_qty WHERE product_id = $product_id");
             }
-
             addLog($conn, $current_user, $_SESSION['worker'] ?? $current_user, "Sold Product #$product_id (Qty: $sell_qty). Income: $income");
             header("Location: showProduct.php");
             exit;
         }
     }
 }
-
-// --- FETCH DATA (JOINING product AND production_date) ---
 $sql = "SELECT p.product_id, p.category, p.price, d.production_date, d.quantity 
         FROM product p 
         JOIN owns_product op ON p.product_id = op.product_id 
@@ -123,8 +114,6 @@ $result = mysqli_query($conn, $sql);
                     while ($row = mysqli_fetch_assoc($result)) {
                         $cat = $row['category'];
                         $pDate = $row['production_date'];
-                        
-                        // --- Expiry Logic ---
                         $expiry_display = "N/A";
                         $class = "fresh";
                         

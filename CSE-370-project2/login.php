@@ -3,23 +3,14 @@ session_start();
 require_once("db.php");
 
 if (isset($_POST["uid"]) && isset($_POST["pass"]) && isset($_POST["usertype"])) {
-    
-    // Sanitize inputs
     $uid = mysqli_real_escape_string($conn, $_POST["uid"]);
     $pass = mysqli_real_escape_string($conn, $_POST["pass"]);
     $type = $_POST["usertype"];
-
-    // ---------------------------------------------------------
-    // SCENARIO 1: WORKER LOGIN
-    // ---------------------------------------------------------
     if ($type == "worker") {
         
         $sql = "SELECT * FROM worker WHERE worker_id = '$uid' AND pass = '$pass'";
         $result = mysqli_query($conn, $sql);
-
         if (mysqli_num_rows($result) > 0) {
-            
-            // Credentials match. Find the Farmer (Owner)
             $owner_sql = "SELECT user_name FROM owns_worker WHERE worker_id = '$uid'";
             $owner_result = mysqli_query($conn, $owner_sql);
             
@@ -29,20 +20,15 @@ if (isset($_POST["uid"]) && isset($_POST["pass"]) && isset($_POST["usertype"])) 
             } else {
                 $farmer_name = "Unknown"; 
             }
-
             $_SESSION["worker"] = $uid;          
             $_SESSION["user"] = $farmer_name; 
-            
             header("Location: worker.php");
             exit();
-
         } else {
             header("Location: index.php?success=1");
             exit();
         }
-
     }
-
     elseif ($type == "farmer") { 
         
         if ($uid === '@Admin' && $pass === 'Admin123') {
@@ -52,8 +38,6 @@ if (isset($_POST["uid"]) && isset($_POST["pass"]) && isset($_POST["usertype"])) 
             header("Location: adminDashboard.php");
             exit();
         }
-        // ---------------------------------------
-
         $sql = "SELECT * FROM dashboard_panel WHERE email = '$uid' AND pass = '$pass'";
         $result = mysqli_query($conn, $sql);
         

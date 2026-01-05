@@ -12,7 +12,6 @@ function addLog($conn, $owner, $worker, $action) {
             VALUES ('$owner', '$worker', '$action', '$date', '$time')";         
     mysqli_query($conn, $sql);
 }
-
 $message = "";
 if (isset($_POST['delete_inventory_id'])) {
     $inventory_id = (int) $_POST['delete_inventory_id'];

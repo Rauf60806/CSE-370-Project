@@ -6,20 +6,16 @@ if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-
 $current_user = $_SESSION['user'];
 $where_sql = "WHERE user_name = '$current_user'";
 $filter_date = "";
-
 if (isset($_GET['filter_date']) && !empty($_GET['filter_date'])) {
     $filter_date = mysqli_real_escape_string($conn, $_GET['filter_date']);
     $where_sql .= " AND log_date = '$filter_date' ";
 }
-
 $query = "SELECT * FROM activity_logs $where_sql ORDER BY log_date DESC, log_time DESC";
 $result = mysqli_query($conn, $query);
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,11 +23,9 @@ $result = mysqli_query($conn, $query);
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="farm-bg">
-
     <div class="header-notch">
         <h1>Activity Logs</h1>
     </div>
-
     <div class="topbar">
         <button onclick="location.href='profile.php'"><img src="assets/img/farmer.png"></button>
         <button onclick="location.href='dashboard.php'"><img src="assets/img/barn.png"></button>
@@ -48,7 +42,6 @@ $result = mysqli_query($conn, $query);
         <div class="card-header">
             <div class="card-header-top">
                 <h2>Daily Activities</h2>
-                
                 <form method="GET" class="filter-row">
                     <label>Date:</label>
                     <input type="date" name="filter_date" value="<?php echo $filter_date; ?>" style="padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
@@ -62,7 +55,6 @@ $result = mysqli_query($conn, $query);
                 Found: <?php echo mysqli_num_rows($result); ?> records
             </div>
         </div>
-
         <table class="table">
             <thead>
                 <tr>
