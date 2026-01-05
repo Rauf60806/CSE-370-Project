@@ -66,6 +66,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ";
 
     if (mysqli_query($conn, $sql_inventory)) {
+        $sql_profit = "UPDATE dashboard_panel SET profit = profit - $price WHERE user_name = '$user_name'";
+        mysqli_query($conn, $sql_profit);
 
         $purchase_id = $conn->insert_id; // auto-incremented ID
 
