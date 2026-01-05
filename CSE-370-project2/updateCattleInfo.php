@@ -1,37 +1,28 @@
 <?php
 require_once "db.php";
 session_start();
-
-// 1. Security Check
 if (!isset($_SESSION['worker'])) {
     header("Location: index.php");
     exit();
 }
 
 $worker_id = $_SESSION['worker'];
-$owner_name = $_SESSION['user'] ?? ''; // Assumes owner's name is in session
+$owner_name = $_SESSION['user'] ?? '';
 $message = "";
 
-// 2. Handle Form Submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $cattle_id = (int) $_POST['cattle_id'];
     $new_weight = (float) $_POST['new_weight'];
 
     if ($cattle_id > 0 && $new_weight > 0) {
-        
-        // A. Update Weight
         $update_sql = "UPDATE cattle SET weight = '$new_weight' WHERE cattle_id = $cattle_id";
         
         if (mysqli_query($conn, $update_sql)) {
-            // Success Message
             $message = "<h2 style='color:green; text-align:center;'>Weight Updated Successfully!</h2>";
-
-            // B. Log Activity
             $date = date("Y-m-d");
             $time = date("H:i:s");
             $log_desc = "Updated Cattle #$cattle_id weight to $new_weight kg";
-            
             $log_sql = "INSERT INTO activity_logs (user_name, who, did_what, log_date, log_time) 
                         VALUES ('$owner_name', '$worker_id', '$log_desc', '$date', '$time')";
             mysqli_query($conn, $log_sql);
@@ -43,15 +34,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = "<h2 style='color:red; text-align:center;'>Invalid Input</h2>";
     }
 }
-
-// 3. Fetch Cattle List (Owned by the specific farmer)
 $sql_list = "SELECT c.cattle_id, c.cattle_type, c.weight 
              FROM cattle c 
              JOIN owns_cattle o ON c.cattle_id = o.cattle_id 
              WHERE o.user_name = '$owner_name'";
 $result_list = mysqli_query($conn, $sql_list);
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,17 +65,12 @@ $result_list = mysqli_query($conn, $sql_list);
     function addLog() {window.location.href="addLog.php"}
     </script>
 </div>
-
 <div class="header-notch">
     <h1>Update Cattle Weight</h1>
 </div>
-
 <div class="panel" style="max-width: 500px; margin: 100px auto; padding: 25px; text-align: center;">
-
     <?php echo $message; ?>
-
     <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white; text-align: left;">
-
         <div style="margin-bottom: 15px;">
             <label style="font-weight: bold;">Select Cattle</label><br>
             <select name="cattle_id" required style="width: 417px; padding: 8px; border-radius: 5px;">
@@ -101,16 +84,13 @@ $result_list = mysqli_query($conn, $sql_list);
                 ?>
             </select>
         </div>
-
         <div style="margin-bottom: 15px;">
             <label style="font-weight: bold;">New Weight (kg)</label><br>
             <input type="number" step="0.01" name="new_weight" placeholder="Enter current weight" required style="width: 400px; padding: 8px; border-radius: 5px;">
         </div>
-
         <div style="margin-top: 30px; text-align: center;">
             <button type="submit" style="width: 150px; padding: 10px; font-weight: bold;">Update</button>
         </div>
-
     </form>
 </div>
 

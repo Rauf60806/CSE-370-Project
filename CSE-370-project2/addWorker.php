@@ -51,7 +51,6 @@ function addLog($conn, $owner, $worker, $action) {
     if (!mysqli_query($conn, $sql)) {
     }
 }
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $pass = $_POST["pass"];

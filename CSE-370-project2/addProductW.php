@@ -54,7 +54,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_query($conn, $sql_stock)) {
         $res = mysqli_query($conn, "SELECT category FROM product WHERE product_id=$product_id");
         $cat = mysqli_fetch_assoc($res)['category'];
-        
         $log_message = "Added Stock: $cat (Qty: $quantity, Date: $p_date)";
         addLog($conn, $_SESSION['user'], $_SESSION['worker'] ?? $_SESSION['user'], $log_message);
 

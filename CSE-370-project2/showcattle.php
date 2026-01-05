@@ -20,7 +20,6 @@
                 VALUES ('$owner', '$worker', '$action', '$date', '$time')";
         mysqli_query($conn, $sql);
     }
-
     if (isset($_POST['sell_cattle_id']) && isset($_POST['sell_price'])) {
         $cattle_id = (int) $_POST['sell_cattle_id'];
         $sale_price = (float) $_POST['sell_price'];
@@ -44,23 +43,17 @@
     }
     $type_filter = $_GET['type'] ?? '';
     $gender_filter = $_GET['gender'] ?? '';
-
-    // Start Query
     $sql = "SELECT c.* FROM cattle c 
             JOIN owns_cattle o ON c.cattle_id = o.cattle_id 
             WHERE o.user_name = '$current_user'";
-
-    // Apply Filters
     if (!empty($type_filter)) {
         $sql .= " AND c.cattle_type = '" . mysqli_real_escape_string($conn, $type_filter) . "'";
     }
     if (!empty($gender_filter)) {
         $sql .= " AND c.gender = '" . mysqli_real_escape_string($conn, $gender_filter) . "'";
     }
-
     $result = mysqli_query($conn, $sql);
 ?>
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -72,7 +65,6 @@
     <div class="header-notch">
         <h1>List of Cattle</h1>
     </div>
-
     <div class="topbar">
         <button onclick="profile()"><img src="assets/img/farmer.png"></button>
         <button type="button" onclick="location.href='dashboard.php'" title="Home"><img src="assets/img/barn.png"></button>
@@ -92,7 +84,6 @@
                 <h2 style="margin: 0; color: #333; font-size: 1.5rem;">Livestock Inventory</h2>
                 <button class="btn-add" onclick="window.location.href='add_cattle.php'">+ Add New Cattle</button>
             </div>
-
             <form method="GET" class="filter-row">
                 <select name="type">
                     <option value="">All Types</option>
@@ -100,21 +91,17 @@
                     <option value="Goat" <?php if($type_filter == 'Goat') echo 'selected'; ?>>Goat</option>
                     <option value="Sheep" <?php if($type_filter == 'Sheep') echo 'selected'; ?>>Sheep</option>
                 </select>
-
                 <select name="gender">
                     <option value="">Any Gender</option>
                     <option value="Male" <?php if($gender_filter == 'Male') echo 'selected'; ?>>Male</option>
                     <option value="Female" <?php if($gender_filter == 'Female') echo 'selected'; ?>>Female</option>
                 </select>
-
                 <button type="submit" class="btn-apply">Apply Filter</button>
-                
                 <?php if(!empty($type_filter) || !empty($gender_filter)): ?>
                     <a href="showcattle.php" class="link-clear">Clear All</a>
                 <?php endif; ?>
             </form>
         </div>
-
         <table class="table">
             <thead>
                 <tr>

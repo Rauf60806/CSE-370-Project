@@ -13,7 +13,6 @@ function addLog($conn, $owner, $worker, $action) {
     if (!mysqli_query($conn, $sql)) {
     }
 }
-// 1. Check Farmer Login (Using 'user')
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit();
@@ -21,16 +20,12 @@ if (!isset($_SESSION['user'])) {
 
 $current_user = $_SESSION['user'];
 $message = "";
-
-// 2. Handle Update Request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $farm_name = mysqli_real_escape_string($conn, $_POST['farm_name']);
     $farm_loc = mysqli_real_escape_string($conn, $_POST['Farm_location']);
     $pass = mysqli_real_escape_string($conn, $_POST['pass']);
-
-    // Updated SQL to include first_name and last_name
     $update_sql = "UPDATE dashboard_panel 
                    SET email='$email', farm_name='$farm_name', Farm_location='$farm_loc', pass='$pass' 
                    WHERE user_name='$current_user'";
@@ -38,20 +33,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_query($conn, $update_sql)) {
         $message = "<p style='color: #009879; font-weight: bold; text-align:center;'>Profile updated successfully!</p>";
         if(function_exists('addLog')) {
-            // Log: Owner=user, Who=user
             addLog($conn, $current_user, $current_user, "Updated own profile info");
         }
     } else {
         $message = "<p class='error' style='text-align:center;'>Error updating: " . mysqli_error($conn) . "</p>";
     }
 }
-
-// 3. Fetch Data
 $query = "SELECT * FROM dashboard_panel WHERE user_name='$current_user'";
 $result = mysqli_query($conn, $query);
 $user_data = mysqli_fetch_assoc($result);
-
-// Construct Full Name for display
 $full_name_display = $user_data['first_name'] . " " . $user_data['last_name'];
 ?>
 

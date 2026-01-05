@@ -71,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 if (isset($_GET['success'])) {
     echo "<h2>New Product added</h2>";}
+    
 ?>
 
 <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">

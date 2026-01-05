@@ -24,7 +24,6 @@ $sql_sheep_count = "SELECT COUNT(*) as total FROM cattle
                     WHERE owns_cattle.user_name = '$current_user' AND cattle.cattle_type = 'Sheep'";
 $sheep_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_sheep_count))['total'];
 
-
 $sql_worker_count = "SELECT COUNT(*) as total FROM worker c join owns_worker w on c.worker_id = w.worker_id WHERE user_name = '$current_user'";
 $worker_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_worker_count))['total'];
 

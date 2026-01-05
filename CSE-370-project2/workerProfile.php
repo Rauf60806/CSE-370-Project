@@ -11,53 +11,38 @@ function addLog($conn, $owner, $worker, $action) {
     $action = mysqli_real_escape_string($conn, $action);
     $sql = "INSERT INTO activity_logs (user_name, who, did_what, log_date, log_time) 
             VALUES ('$owner', '$worker', '$action', '$date', '$time')";
-            
     if (!mysqli_query($conn, $sql)) {
-        // Silently handle error
     }
 }
 
-// 1. Check Worker Login
 if (!isset($_SESSION['worker'])) {
     header("Location: index.php");
     exit();
 }
-
 $worker_id = $_SESSION['worker'];
-// Typically the owner's username is stored in $_SESSION['user'] during login, or we can fetch it.
-// If $_SESSION['user'] is not set for workers, ensure your login logic sets it, 
-// otherwise this log might have an empty 'user_name'.
 $owner_name = $_SESSION['user'] ?? 'Unknown Owner'; 
 $message = "";
-
-// 2. Handle Update Request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     $name = mysqli_real_escape_string($conn, $_POST['name']);
     $age = mysqli_real_escape_string($conn, $_POST['age']);
     $contact = mysqli_real_escape_string($conn, $_POST['contact_number']);
     $pass = mysqli_real_escape_string($conn, $_POST['pass']);
-
-    // Note: Salary and Work Hours are NOT updated here
     $update_sql = "UPDATE worker 
                    SET name='$name', age='$age', contact_number='$contact', pass='$pass' 
                    WHERE worker_id='$worker_id'";
 
     if (mysqli_query($conn, $update_sql)) {
         $message = "<p style='color: #009879; font-weight: bold; text-align:center;'>Profile updated successfully!</p>";
-        // Log: Owner, Who (Worker ID), Action
         addLog($conn, $owner_name, $worker_id, "Worker updated own profile");
     } else {
         $message = "<p class='error' style='text-align:center;'>Error updating: " . mysqli_error($conn) . "</p>";
     }
 }
-
-// 3. Fetch Data
 $query = "SELECT * FROM worker WHERE worker_id='$worker_id'";
 $result = mysqli_query($conn, $query);
 $worker_data = mysqli_fetch_assoc($result);
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,9 +72,7 @@ $worker_data = mysqli_fetch_assoc($result);
     function addLog() {window.location.href="addLog.php"}
     </script>
     </div>
-
     <div class="profile-container">
-        
         <div class="profile-header">
             <div class="profile-avatar">
                 <img src="assets/img/worker.png" alt="Profile">
@@ -97,11 +80,8 @@ $worker_data = mysqli_fetch_assoc($result);
             <h2><?php echo htmlspecialchars($worker_data['name']); ?></h2>
             <p style="color: #666;">Employee ID: <?php echo htmlspecialchars($worker_data['worker_id']); ?></p>
         </div>
-
         <?php echo $message; ?>
-
         <form method="POST" class="profile-form">
-            
             <div class="form-group">
                 <label>Full Name</label>
                 <input type="text" name="name" value="<?php echo htmlspecialchars($worker_data['name']); ?>" required>
