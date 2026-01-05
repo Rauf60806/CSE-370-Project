@@ -32,7 +32,6 @@
 <?php
 require_once "db.php";
 session_start();
-
 function addLog($conn, $owner, $worker, $action) {
     $date = date("Y-m-d");
     $time = date("H:i:s");
@@ -45,20 +44,14 @@ function addLog($conn, $owner, $worker, $action) {
 }
 
 $user = $_SESSION['user'];
-
-// --- HANDLE FORM SUBMISSION ---
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_id = (int)$_POST["product_id"];
     $quantity   = (int)$_POST["quantity"];
-    $p_date     = date("Y-m-d"); // Current Date automatically
-
-    // Insert into production_date table (The Stock Batch)
+    $p_date     = date("Y-m-d");
     $sql_stock = "INSERT INTO production_date (product_id, production_date, quantity) 
                   VALUES ('$product_id', '$p_date', '$quantity')";
 
     if (mysqli_query($conn, $sql_stock)) {
-        
-        // Log the action (Fetching name for log)
         $res = mysqli_query($conn, "SELECT category FROM product WHERE product_id=$product_id");
         $cat = mysqli_fetch_assoc($res)['category'];
         
@@ -71,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<p style='color:red;'>Error: " . mysqli_error($conn) . "</p>";
     }
 }
-
 $sql_dropdown = "SELECT p.product_id, p.category, p.price 
                  FROM product p 
                  JOIN owns_product op ON p.product_id = op.product_id 

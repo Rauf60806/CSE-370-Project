@@ -37,11 +37,8 @@
     </div>
 <div class = "panel" style="max-width: 430px; margin: 100px auto;">
 <?php
-// Include database connection
 require_once "db.php";
 session_start();
-
-/*----------------------log function----------------------*/
 function addLog($conn, $owner, $worker, $action) {
     $date = date("Y-m-d");
     $time = date("H:i:s");
@@ -54,11 +51,8 @@ function addLog($conn, $owner, $worker, $action) {
     if (!mysqli_query($conn, $sql)) {
     }
 }
-/*----------------------log function----------------------*/
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-    // Read form values safely
     $name = $_POST["name"];
     $pass = $_POST["pass"];
     $age         = $_POST["age"];
@@ -66,8 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $work_hour   = $_POST["work_hour"];
     $contact  = $_POST["contact"];
 
-    // SQL query to insert worker data
-    // NOTE: worker_id is now auto-increment, so we don't include it
     $sql = "INSERT INTO worker (pass,name, age, salary, work_hour,contact_number)
             VALUES ('$pass','$name', '$age', '$salary', '$work_hour', '$contact')";
 
@@ -77,27 +69,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     . mysqli_real_escape_string($conn, $_SESSION['user']) . "', "
     . (int)$worker_id . ")";
     }
-    // Execute query
     if (mysqli_query($conn, $sql_ownworker)) {
-            // --- AUTOMATIC LOG START ---
+        
             $log_message = "Added a new Worker (ID: $worker_id, Contact: $contact)";
             addLog($conn, $_SESSION['user'], $_SESSION['worker'], $log_message);
-            // --- AUTOMATIC LOG END ---
+
         header("Location: addWorker.php?success=1");
         exit;
     } else {
         echo "<p style='color:red;'>Error adding worker: " . mysqli_error($conn) . "</p>";
     }
 }
-
-// Show success message if redirected after insert
 if (isset($_GET['success'])) {
     echo "<h2>Worker added successfully</h2>";
 }
 ?>
 <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">
-
-    <!-- Name input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Name</label><br>
         <input type="text" name="name" required style="width: 400px; padding: 8px; border-radius: 5px;">
@@ -106,30 +93,22 @@ if (isset($_GET['success'])) {
         <label style="font-weight: bold;">Password</label><br>
         <input type="password" name="pass" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-    <!-- Age input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Age</label><br>
         <input type="number" name="age" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-
-    <!-- Salary input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Salary</label><br>
         <input type="number" name="salary" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-
-    <!-- Work Hour input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Work Hour [Per Week]</label><br>
         <input type="number" name="work_hour" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-
-    <!-- Access Key input -->
     <div style="margin-bottom: 20px;">
         <label style="font-weight: bold;">Contact Number</label><br>
         <input type="text" name="contact" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-    <!-- Submit button -->
     <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
         Add Worker
     </button>

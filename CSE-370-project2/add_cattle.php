@@ -35,12 +35,10 @@
     <div class="header-notch">
         <h1>Add Cattle</h1>
     </div>
-
 <div class = "panel" style="max-width: 430px; margin: 100px auto;">
 <?php
 require_once "db.php";
 session_start();
-/*----------------------log function----------------------*/
 function addLog($conn, $owner, $worker, $action) {
     $date = date("Y-m-d");
     $time = date("H:i:s");
@@ -53,7 +51,6 @@ function addLog($conn, $owner, $worker, $action) {
     if (!mysqli_query($conn, $sql)) {
     }
 }
-/*----------------------log function----------------------*/
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cattle_type = $_POST["cattle_type"];
     $age         = $_POST["age"];
@@ -74,11 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $sql_profit = "UPDATE dashboard_panel SET profit = profit - $price WHERE user_name = '$user_name'";
         mysqli_query($conn, $sql_profit);
-
-            // --- AUTOMATIC LOG START ---
         $log_message = "Added a new $cattle_type (Weight: $weight kg, Gender: $gender)";
         addLog($conn, $_SESSION['user'], $_SESSION['worker'], $log_message);
-            // --- AUTOMATIC LOG END ---
        header("Location: add_cattle.php?success=1");
         exit;
     } 
@@ -92,8 +86,6 @@ if (isset($_GET['success'])) {
 ?>
 
     <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">
-
-    <!-- Cattle Type selection -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Cattle Type</label><br>
         <select name="cattle_type" required style="width: 417px; padding: 8px; border-radius: 5px;">
@@ -103,14 +95,10 @@ if (isset($_GET['success'])) {
             <option value="Sheep">Sheep</option>
         </select>
     </div>
-
-    <!-- Age input -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Age</label><br>
         <input type="number" name="age" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-
-    <!-- Gender selection -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Gender</label><br>
         <select name="gender" required style="width: 417px; padding: 8px; border-radius: 5px;">
@@ -119,8 +107,6 @@ if (isset($_GET['success'])) {
             <option value="Female">Female</option>
         </select>
     </div>
-
-    <!-- Weight input -->
     <div style="margin-bottom: 20px;">
         <label style="font-weight: bold;">Weight (kg)</label><br>
         <input type="number" name="weight" required style="width: 400px; padding: 8px; border-radius: 5px;">

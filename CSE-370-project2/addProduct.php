@@ -36,12 +36,9 @@
         <h1>Add Product</h1>
     </div>
 <div class = "panel" style="max-width: 430px; margin: 100px auto;">
-
-
 <?php
 require_once "db.php";
 session_start();
-
 function addLog($conn, $owner, $worker, $action) {
     $date = date("Y-m-d");
     $time = date("H:i:s");
@@ -52,19 +49,14 @@ function addLog($conn, $owner, $worker, $action) {
             VALUES ('$owner', '$worker', '$action', '$date', '$time')";
     mysqli_query($conn, $sql);
 }
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category = mysqli_real_escape_string($conn, $_POST["Category"]);
     $price    = (float)$_POST["price"];
     $user     = $_SESSION['user'];
-
-    // 1. Insert into Product Table (Defines Type & Price)
     $sql_product = "INSERT INTO product (category, price) VALUES ('$category', '$price')";
 
     if (mysqli_query($conn, $sql_product)) {
         $product_id = $conn->insert_id;
-
-        // 2. Link Ownership (So only you see this product)
         $sql_own = "INSERT INTO owns_product (user_name, product_id) VALUES ('$user', '$product_id')";
         mysqli_query($conn, $sql_own);
         
@@ -82,17 +74,14 @@ if (isset($_GET['success'])) {
 ?>
 
 <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">
-
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Product Type</label><br>
         <input type="text" name="Category" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Price</label><br>
         <input type="number" name="price" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
-
     <button type="submit" style="padding: 10px 20px; border-radius: 5px; color: white; border: none; cursor: pointer;">
         Add Product
     </button>

@@ -5,7 +5,6 @@ if (!isset($_SESSION['worker'])) {
     header("Location: index.php");
     exit();
 }
-
 $worker_id = $_SESSION['worker'];
 $owner_name = $_SESSION['user'] ?? ''; 
 $message = "";
@@ -29,7 +28,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

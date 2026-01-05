@@ -40,7 +40,6 @@
 <?php
 require_once "db.php";
 session_start();
-/*----------------------log function----------------------*/
 function addLog($conn, $owner, $worker, $action) {
     $date = date("Y-m-d");
     $time = date("H:i:s");
@@ -53,7 +52,6 @@ function addLog($conn, $owner, $worker, $action) {
     if (!mysqli_query($conn, $sql)) {
     }
 }
-/*----------------------log function----------------------*/
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $user_name      = mysqli_real_escape_string($conn, $_SESSION['user']);
@@ -69,12 +67,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $sql_profit = "UPDATE dashboard_panel SET profit = profit - $price WHERE user_name = '$user_name'";
         mysqli_query($conn, $sql_profit);
 
-        $purchase_id = $conn->insert_id; // auto-incremented ID
+        $purchase_id = $conn->insert_id;
 
-        // --- AUTOMATIC LOG START ---
         $log_message = "Added new inventory item ($inventory_type), Quantity: $amount, Price: $price";
         addLog($conn, $_SESSION['user'], $_SESSION['worker'], $log_message);
-        // --- AUTOMATIC LOG END ---
 
         header("Location: addInventory.php?success=1");
         exit;
@@ -93,7 +89,6 @@ if (isset($_GET['success'])) {
 
     <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">
 
-    <!-- inventory Type selection -->
     <div style="margin-bottom: 15px;">
         <label style="font-weight: bold;">Inventory Type</label><br>
         <select name="inventory_type" required style="width: 417px; padding: 8px; border-radius: 5px;">
@@ -112,14 +107,11 @@ if (isset($_GET['success'])) {
         <input type="date" name="purchase_date" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>
 
-    <!-- Price input -->
     <div style="margin-bottom: 20px;">
         <label style="font-weight: bold;">Price</label><br>
         <input type="number" name="price" required style="width: 400px; padding: 8px; border-radius: 5px;">
     </div>    
 
-
-    <!-- Submit button -->
     <button type="submit" style="padding: 10px 20px; border-radius: 5px; background-color: #4CAF50; color: white; border: none; cursor: pointer;">
         Add Inventory
     </button>    
