@@ -68,9 +68,9 @@ $result_list = mysqli_query($conn, $sql_list);
 <div class="header-notch">
     <h1>Update Cattle Weight</h1>
 </div>
-<div class="panel" style="max-width: 500px; margin: 100px auto; padding: 25px; text-align: center;">
+<div class="panel" class = "panel" style="max-width: 430px; margin: 100px auto;">
     <?php echo $message; ?>
-    <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white; text-align: left;">
+    <form method="post" style="margin: 0 auto; max-width: 500px; font-weight: bold; text-shadow: 1px 1px 2px white;">
         <div style="margin-bottom: 15px;">
             <label style="font-weight: bold;">Select Cattle</label><br>
             <select name="cattle_id" required style="width: 417px; padding: 8px; border-radius: 5px;">

@@ -11,7 +11,7 @@ session_start();
     <div class="header-notch">
         <h1>🐄Brac Cattle Management 🐐</h1>
     </div>
-    <div class="box" class="panel" style="max-width: 430px; margin: 100px auto;">
+    <div class="box" style="max-width: 430px; margin: 100px auto;">
         <h2>Please Log in</h2>
         <?php 
         if (isset($_GET['success'])) {

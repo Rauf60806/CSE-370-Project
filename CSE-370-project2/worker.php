@@ -3,7 +3,7 @@ require_once "db.php";
 session_start();
 
 if (!isset($_SESSION['worker'])) {
-    header("Location: login.php");
+    header("Location: index.php");
     exit();
 }
 
@@ -28,6 +28,9 @@ $sql_sheep_count = "SELECT COUNT(*) as total FROM cattle
                     INNER JOIN owns_cattle ON cattle.cattle_id = owns_cattle.cattle_id 
                     WHERE owns_cattle.user_name = '$current_user' AND cattle.cattle_type = 'Sheep'";
 $sheep_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_sheep_count))['total'];
+
+$sql_product_count = "SELECT COUNT(*) as total FROM product c join owns_product p on c.product_id = p.product_id WHERE user_name = '$current_user'";
+$product_count = mysqli_fetch_assoc(mysqli_query($conn, $sql_product_count))['total'];
 
 $sql_logs = "SELECT * FROM activity_logs WHERE who = '$worker_id' ORDER BY report_id DESC LIMIT 10";
 $recent_logs = mysqli_query($conn, $sql_logs);
@@ -60,6 +63,7 @@ $recent_logs = mysqli_query($conn, $sql_logs);
             function addProduct() {window.location.href="addProductW.php"}
             function medical_record() {window.location.href="medical_recordW.php"}
             function addLog() {window.location.href="addLog.php"}
+            function sellproduct() {window.location.href="showStock.php"}
         </script>
     </div>
     <div class="main-content" >
@@ -72,6 +76,10 @@ $recent_logs = mysqli_query($conn, $sql_logs);
                     <span>Goats: <?php echo $goat_count; ?></span> | 
                     <span>Sheep: <?php echo $sheep_count; ?></span>
                 </div>
+            </div>
+            <div class="stat-card highlight" onclick="sellproduct()">
+                <h3 >Sell Product</h3>
+                <p class="stat-number"><?php echo $product_count; ?></p>
             </div>
         </div>
             <table class="table" style="border-collapse: collapse;">

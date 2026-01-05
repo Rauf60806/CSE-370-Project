@@ -83,7 +83,7 @@ $current_profit = isset($row_profit['profit']) ? $row_profit['profit'] : 0;
                 <span>Total Earnings</span>
             </div>
         </div>
-        <div class="stat-card highlight">
+        <div class="stat-card highlight" onclick="showCattle()">
             <h3>Total Livestock</h3>
             <p class="stat-number"><?php echo $total_cattle; ?></p>
             <div class="breakdown">
@@ -93,12 +93,12 @@ $current_profit = isset($row_profit['profit']) ? $row_profit['profit'] : 0;
             </div>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card" onclick="showWorker()">
             <h3>Staff Members</h3>
             <p class="stat-number"><?php echo $worker_count; ?></p>
         </div>
 
-        <div class="stat-card">
+        <div class="stat-card" onclick="showProduct()">
             <h3>Farm Products</h3>
             <p class="stat-number"><?php echo $product_count; ?></p>
         </div>
